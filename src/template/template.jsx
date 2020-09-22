@@ -21,12 +21,7 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
-        <Text>Hello world!</Text>
-        <AtButton type='primary'>I need Taro UI</AtButton>
-        <Text>首页</Text>
-        <AtButton type='secondary' circle onClick={() => (Taro.navigateTo({ url: '/pages/select/select' }))}>跳转</AtButton>
-        <Text>注册页面</Text>
-        <AtButton type='secondary' circle onClick={() => (Taro.navigateTo({ url: '/pages/register/register' }))}>点击跳转</AtButton>
+
       </View>
     )
   }
