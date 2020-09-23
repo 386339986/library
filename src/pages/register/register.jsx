@@ -4,7 +4,7 @@ import { AtButton } from 'taro-ui'
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './register.less'
-import WxInfo from "./components/wxInfo";
+import WxInfo from "../../components/wxInfo";
 import Body from "./components/body";
 
 export default class Register extends Component {

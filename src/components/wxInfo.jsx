@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Taro from '@tarojs/taro';
 import {Image, Text, View} from "@tarojs/components";
 import './wxInfo.less';
-import noPicJpg from '../../../assets/img/no_pic.jpg';
+import noPicJpg from '../assets/img/no_pic.jpg';
 
 export default class WxInfo extends Component {
 
@@ -28,7 +28,7 @@ export default class WxInfo extends Component {
           {/*{this.state.tips}*/}
         </Text>
         <Image src={noPicJpg} className='user-logo' />
-        <Text className='user-name'>LKnight</Text>
+        <Text className='user-name'>测试用户</Text>
       </View>
     )
   }
