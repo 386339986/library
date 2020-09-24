@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { AtGrid, AtNoticebar } from 'taro-ui'
 
 import "taro-ui/dist/style/components/grid.scss" // 按需引入
@@ -20,11 +20,32 @@ export default class FuncGrid extends Component {
 
   componentDidHide () { }
 
+  handleClick (item, index) {
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        Taro.reLaunch({ url: '/pages/center/center?page=mistake' })
+        break;
+    }
+  }
+
   render () {
     return (
       <View className='func'>
         <AtGrid
-          className='grid'
           data={
           [
             {
@@ -62,6 +83,7 @@ export default class FuncGrid extends Component {
           ]
         }
           columnNum={4}
+          onClick={(item, index)=> (this.handleClick(item, index))}
         />
         <AtNoticebar
           icon='volume-plus'

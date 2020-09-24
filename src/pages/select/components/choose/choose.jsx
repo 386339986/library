@@ -62,7 +62,6 @@ export default class Choose extends Component {
                   {
                     Object.values(this.state.roomList[item]).map( (roomsItem, roomsIndex) => (
                       roomsItem.map( (roomItem, roomIndex) => (
-                        console.log(roomItem),
                         <AtListItem
                           title={this.state.tabList[index]['title'] + ' ' + roomItem['room'] + '室'}
                           note={roomItem['times'][0][0] + ' ~ ' + roomItem['times'][0][1] + ' 开馆前可提前 ' +

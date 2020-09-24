@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import { View, Text, Swiper, SwiperItem } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
-import './select.less'
-import Top from "./components/top/top";
-import FuncGrid from "./components/func/func";
-import Choose from "./components/choose/choose";
+import './mistake.less'
 
-export default class Select extends Component {
+export default class Mistake extends Component {
 
   componentWillMount () { }
 
@@ -23,10 +20,13 @@ export default class Select extends Component {
 
   render () {
     return (
-      <View className='select'>
-        <Top />
-        <FuncGrid />
-        <Choose />
+      <View className='mistake'>
+        <AtButton
+          type='secondary'
+          size='small'
+          circle
+          onClick={() => (this.props.onWinChange('mistake', false))}
+        >返回</AtButton>
       </View>
     )
   }
