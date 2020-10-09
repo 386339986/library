@@ -1,10 +1,11 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/index1/index1',
     'pages/register/register',
-    'pages/select/select',
     'pages/rule/rule',
-    'pages/center/center'
+    'pages/center/center',
+    'pages/select/select'
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -14,11 +15,11 @@ export default {
   },
   tabBar: {
     color: 'rgba(68, 68, 68, 1)',
-    selectedColor: 'rgba(68, 68, 68, 1)',
+    selectedColor: '#686868',
     backgroundColor: 'white',
     list: [
       {
-        pagePath: 'pages/select/select',
+        pagePath: 'pages/index/index',
         text: '首页',
         iconPath: './assets/img/ic_home.png',
         selectedIconPath: './assets/img/ic_home_pressed.png'

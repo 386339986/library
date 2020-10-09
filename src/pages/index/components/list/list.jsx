@@ -6,9 +6,9 @@ import { AtList, AtListItem, AtTabs, AtTabsPane } from 'taro-ui'
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import "taro-ui/dist/style/components/tabs.scss" // 按需引入
 import "taro-ui/dist/style/components/list.scss" // 按需引入
-import './choose.less'
+import './list.less'
 
-export default class Choose extends Component {
+export default class List extends Component {
 
   constructor() {
     super(...arguments);
@@ -68,6 +68,7 @@ export default class Choose extends Component {
                             roomItem['advance'] + '小时预定'}
                           extraText={roomItem['free'] + '/' + roomItem['total']}
                           key={roomIndex}
+                          onClick={() => (Taro.navigateTo({url: '/pages/select/select'}))}
                         >
                         </AtListItem>
                       ))

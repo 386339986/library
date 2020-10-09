@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import Taro from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { View } from '@tarojs/components'
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './index.less'
+import Top from "./components/top/top";
+import FuncGrid from "./components/func/func";
+import List from "./components/list/list";
 
-export default class Index extends Component {
+export default class Select extends Component {
 
   componentWillMount () { }
 
@@ -20,13 +21,10 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='index'>
-        <Text>Hello world!</Text>
-        <AtButton type='primary'>I need Taro UI</AtButton>
-        <Text>首页</Text>
-        <AtButton type='secondary' circle onClick={() => (Taro.switchTab({ url: '/pages/select/select' }))}>跳转</AtButton>
-        <Text>注册页面</Text>
-        <AtButton type='secondary' circle onClick={() => (Taro.navigateTo({ url: '/pages/register/register' }))}>点击跳转</AtButton>
+      <View className='select'>
+        <Top />
+        <FuncGrid />
+        <List />
       </View>
     )
   }
