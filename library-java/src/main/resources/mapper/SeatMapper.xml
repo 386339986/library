@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.plutonight.library.mapper.SeatMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.plutonight.library.entity.Seat">
+        <id column="id" property="id" />
+        <result column="school_id" property="schoolId" />
+        <result column="name" property="name" />
+        <result column="room_number" property="roomNumber" />
+        <result column="seats" property="seats" />
+        <result column="seats_count" property="seatsCount" />
+        <result column="seats_available" property="seatsAvailable" />
+        <result column="seats_unavailabe" property="seatsUnavailabe" />
+        <result column="status" property="status" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, school_id, name, room_number, seats, seats_count, seats_available, seats_unavailabe, status, created_time, updated_time
+    </sql>
+
+</mapper>

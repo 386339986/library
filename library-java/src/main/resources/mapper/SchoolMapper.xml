@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.plutonight.library.mapper.SchoolMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.plutonight.library.entity.School">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="usage_role" property="usageRole" />
+        <result column="appointment_rule" property="appointmentRule" />
+        <result column="violation_rule" property="violationRule" />
+        <result column="blacklist_rules" property="blacklistRules" />
+        <result column="retention_rule" property="retentionRule" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, province, city, usage_role, appointment_rule, violation_rule, blacklist_rules, retention_rule
+    </sql>
+
+</mapper>
