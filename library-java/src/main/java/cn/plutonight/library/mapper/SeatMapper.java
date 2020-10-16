@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author LPH
- * @since 2020-10-10
+ * @since 2020-10-16
  */
 public interface SeatMapper extends BaseMapper<Seat> {
 

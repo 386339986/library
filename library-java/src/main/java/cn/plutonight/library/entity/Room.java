@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 学校信息
+ * 自习室
  * </p>
  *
  * @author LPH
@@ -18,23 +18,29 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="School对象", description="学校信息")
-public class School implements Serializable {
+@ApiModel(value="Room对象", description="自习室")
+public class Room implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "学校id")
+    @ApiModelProperty(value = "自习室id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "学校所在省份")
-    private String province;
+    @ApiModelProperty(value = "自习室名称")
+    private String name;
 
-    @ApiModelProperty(value = "学校所在市")
-    private String city;
-
-    @ApiModelProperty(value = "状态：1 启用 2 停用")
+    @ApiModelProperty(value = "状态：1 启用 2 待用 3 维护")
     private Integer status;
+
+    @ApiModelProperty(value = "自习室剩余可用数量")
+    private Integer available;
+
+    @ApiModelProperty(value = "自习室总座位数量")
+    private Integer count;
+
+    @ApiModelProperty(value = "自习室座位和状态")
+    private String seats;
 
 
 }

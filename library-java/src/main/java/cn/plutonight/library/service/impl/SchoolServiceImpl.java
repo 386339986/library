@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 学校信息 服务实现类
  * </p>
  *
  * @author LPH
- * @since 2020-10-10
+ * @since 2020-10-16
  */
 @Service
 public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> implements ISchoolService {

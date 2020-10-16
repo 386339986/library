@@ -1,6 +1,7 @@
 package cn.plutonight.library.entity;
 
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author LPH
- * @since 2020-10-10
+ * @since 2020-10-16
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -22,35 +23,21 @@ public class Seat implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    @ApiModelProperty(value = "座位id")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
-    @ApiModelProperty(value = "自习室所在学校")
-    private String schoolId;
+    @ApiModelProperty(value = "学生id")
+    private Integer studentId;
 
-    @ApiModelProperty(value = "自习室名称")
-    private String name;
+    @ApiModelProperty(value = "学校id")
+    private Integer schoolId;
 
-    @ApiModelProperty(value = "自习室编号")
-    private String roomNumber;
+    @ApiModelProperty(value = "自习室id")
+    private Integer roomId;
 
-    @ApiModelProperty(value = "座位位置和状态")
-    private String seats;
-
-    @ApiModelProperty(value = "座位总数")
-    private Integer seatsCount;
-
-    @ApiModelProperty(value = "剩余座位数量")
-    private Integer seatsAvailable;
-
-    @ApiModelProperty(value = "已使用座位数量")
-    private Integer seatsUnavailabe;
-
-    @ApiModelProperty(value = "0: 待用; 1: 启用; -1: 维护")
+    @ApiModelProperty(value = "状态：1 空闲 2 使用 3 正常使用 ")
     private Integer status;
-
-    private LocalDateTime createdTime;
-
-    private LocalDateTime updatedTime;
 
 
 }

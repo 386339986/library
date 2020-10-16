@@ -43,7 +43,7 @@ public class AutoCodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/study_room?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false");
+        dsc.setUrl("jdbc:mysql://localhost:3306/library?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");
@@ -113,7 +113,7 @@ public class AutoCodeGenerator {
         // strategy.setSuperControllerClass("com.fame.common.BaseController");
         //strategy.setInclude(new String[] {});
         // 写于父类中的公共字段
-        // strategy.setSuperEntityColumns("id");
+        strategy.setSuperEntityColumns("create_time", "update_time");
         // strategy.setControllerMappingHyphenStyle(true);
         // strategy.setTablePrefix(new String[] {"naemall_"});
         generator.setStrategy(strategy);

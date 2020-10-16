@@ -1,6 +1,6 @@
 package cn.plutonight.library.utils;
 
-import cn.plutonight.library.entity.User;
+import cn.plutonight.library.entity.Student;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -9,7 +9,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.sql.Timestamp;
-import java.util.UUID;
 
 /**
  * <p>
@@ -33,10 +32,10 @@ public class Utils {
         return getTimeStamp().toString();
     }
 
-    public static String getToken(User user) {
+    public static String getToken(Student student) {
         String token = Jwts.builder()
-                .setId(user.getId())
-                .setSubject(user.getName())
+                .setId(student.getId().toString())
+                .setSubject(student.getName())
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS512, "library")
                 .compact();

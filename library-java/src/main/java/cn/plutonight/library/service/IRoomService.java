@@ -1,16 +1,16 @@
 package cn.plutonight.library.service;
 
-import cn.plutonight.library.entity.Seat;
+import cn.plutonight.library.entity.Room;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- *  服务类
+ * 自习室 服务类
  * </p>
  *
  * @author LPH
  * @since 2020-10-16
  */
-public interface ISeatService extends IService<Seat> {
+public interface IRoomService extends IService<Room> {
 
 }

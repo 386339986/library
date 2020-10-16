@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.plutonight.library.mapper.UserMapper">
+<mapper namespace="cn.plutonight.library.mapper.StudentMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.plutonight.library.entity.User">
+    <resultMap id="BaseResultMap" type="cn.plutonight.library.entity.Student">
         <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
         <result column="name" property="name" />
+        <result column="number" property="number" />
         <result column="password" property="password" />
-        <result column="student_num" property="studentNum" />
         <result column="phone" property="phone" />
-        <result column="role" property="role" />
         <result column="status" property="status" />
-        <result column="bad_record" property="badRecord" />
-        <result column="created_time" property="createdTime" />
-        <result column="updated_time" property="updatedTime" />
+        <result column="school_id" property="schoolId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, password, student_num, phone, role, status, bad_record, created_time, updated_time
+        create_time,
+        update_time,
+        id, name, number, password, phone, status, school_id
     </sql>
 
 </mapper>
