@@ -1,18 +1,27 @@
 .user-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 12PX;
 
-  .user-logo {
-    width: 70PX;
-    height: 70PX;
-    border-radius: 50%;
-    margin: 12PX auto 1% auto;
-  }
+  .info-container {
+    display: flex;
+    flex-direction: row;
 
-  .user-name {
-    margin-top: 10PX;
-    font-size: 20PX;
-    color: black;
+    .user-avatar {
+      width: 70PX;
+      height: 70PX;
+      border-radius: 50%;
+      margin: 12PX 20PX;
+    }
+
+    .user-name {
+      margin-top: 30PX;
+      font-size: 20PX;
+      color: black;
+    }
+
+    .user-wxName {
+      margin-top: 30PX;
+    }
   }
 }

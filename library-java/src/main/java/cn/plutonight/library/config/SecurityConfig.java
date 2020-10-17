@@ -95,6 +95,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 }))
                 .successHandler(((httpServletRequest, httpServletResponse, authentication) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
+                    httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+                    httpServletResponse.setHeader("Cache-Control","no-cache");
                     Map<String, Object> map = new HashMap<>();
                     PrintWriter out = httpServletResponse.getWriter();
                     map.put("code", 200);

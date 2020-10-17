@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Taro from '@tarojs/taro';
 import { View, Text } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 
@@ -11,7 +12,27 @@ export default class Register extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () {
+    // if (Taro.getEnv() === Taro.ENV_TYPE.WEAPP) {
+    //   Taro.getSetting({
+    //     success: function (res) {
+    //       console.log(res)
+    //       if (!res.authSetting['scope.userInfo']) {
+    //         Taro.authorize({
+    //           scope: 'scope.userInfo',
+    //           success: function () {
+    //             Taro.getUserInfo({
+    //               success: function (res) {
+    //                 console.log(res)
+    //               }
+    //             })
+    //           }
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+  }
 
   componentWillUnmount () { }
 
@@ -27,13 +48,6 @@ export default class Register extends Component {
           <WxInfo />
         </View>
         <Body />
-
-        {/*<Text>Hello world!</Text>*/}
-        {/*<AtButton type='primary'>I need Taro UI</AtButton>*/}
-        {/*<Text>Taro UI 支持 Vue 了吗？</Text>*/}
-        {/*<AtButton type='primary' circle={true}>支持</AtButton>*/}
-        {/*<Text>共建？</Text>*/}
-        {/*<AtButton type='secondary' circle={true}>来</AtButton>*/}
       </View>
     )
   }

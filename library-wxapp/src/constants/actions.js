@@ -1,0 +1,5 @@
+export const SET_NAME = 'NAME'
+export const SET_NUMBER = 'NUM'
+export const SET_PHONE = 'PHONE'
+export const SET_TOKEN = 'TOKEN'
+export const SET_SCHOOL = 'SCHOOL'

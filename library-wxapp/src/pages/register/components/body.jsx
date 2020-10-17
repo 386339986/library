@@ -25,7 +25,7 @@ export default class Body extends Component {
         '广州市': ['中山大学', '华南理工大学', '广州大学']},
       selectorChecked: '',
       value: [0, 0],
-      phone: '',
+      username: '',
       password: '',
       errorText: '错误',
     }
@@ -55,7 +55,7 @@ export default class Body extends Component {
     })
   }
 
-  phoneChange (value) {
+  usernameChange (value) {
     this.setState({
       phone: value
     })
@@ -84,11 +84,6 @@ export default class Body extends Component {
     if (this.state.selectorChecked.trim() === '') {
       Taro.atMessage({
         'message': '请选择学校',
-        'type': 'error',
-      });
-    } else if (!(/^1\d{10}$/).test(this.state.phone)) {
-      Taro.atMessage({
-        'message': '请输入正确的11位数手机号码',
         'type': 'error',
       });
     } else if (!(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/).test(this.state.password)) {
@@ -125,14 +120,12 @@ export default class Body extends Component {
               </AtList>
             </Picker>
             <AtInput
-              name='phone'
-              type='digit'
-              title='手机号'
+              name='username'
+              title='学号'
               required
-              placeholder='请输入手机号码'
-              maxlength='11'
-              value={this.state.phone}
-              onChange={this.phoneChange.bind(this)}
+              placeholder='请输入学号'
+              value={this.state.username}
+              onChange={this.usernameChange.bind(this)}
             />
             <AtInput
               name='password'
