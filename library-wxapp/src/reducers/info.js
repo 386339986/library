@@ -1,10 +1,11 @@
-import { SET_NAME, SET_NUMBER, SET_PHONE, SET_TOKEN, SET_SCHOOL } from '../constants/actions'
+import { SET_NAME, SET_NUMBER, SET_PHONE, SET_TOKEN, SET_SCHOOL, SET_USER_ID } from '../constants/actions'
 
 const USER_INFO_STATE = {
-  student_name: '未设定',
+  student_name: '未登录用户',
   student_number: '',
   student_phone: '',
-  student_school: '未设定学校',
+  student_school: '',
+  student_id: 0,
   token: ''
 }
 
@@ -34,6 +35,11 @@ export default function userInfo (state = USER_INFO_STATE, action) {
       return {
         ...state,
         student_school: action.school
+      }
+    case SET_USER_ID:
+      return {
+        ...state,
+        student_id: action.id
       }
     default:
       return state

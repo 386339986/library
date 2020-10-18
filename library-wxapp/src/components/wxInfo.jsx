@@ -3,6 +3,11 @@ import Taro from '@tarojs/taro';
 import {Image, OpenData, Text, View} from "@tarojs/components";
 import './wxInfo.less';
 import noPicJpg from '../assets/img/no_pic.jpg';
+import {connect} from "react-redux";
+
+@connect(({userInfo}) => ({
+  userInfo
+}))
 
 export default class WxInfo extends Component {
 
@@ -24,17 +29,26 @@ export default class WxInfo extends Component {
   render() {
     let renderInfo;
     if (Taro.getEnv() === Taro.ENV_TYPE.WEAPP) {
-      renderInfo = (
-        <View className='info-container'>
-          <View className='user-avatar'><OpenData type='userAvatarUrl' /></View>
-          <View className='user-wxName'><OpenData type='userNickName' defaultAvatar={noPicJpg}/></View>
-        </View>
-      )
+      if (this.props.userInfo.id !== 0) {
+        renderInfo = (
+          <View className='info-container'>
+            <View className='user-avatar'><OpenData type='userAvatarUrl' defaultAvatar={noPicJpg}/></View>
+            <Text className='user-name'>{this.props.userInfo.student_name}</Text>
+          </View>
+        )
+      } else {
+        renderInfo = (
+          <View className='info-container'>
+            <View className='user-avatar'><OpenData type='userAvatarUrl' defaultAvatar={noPicJpg}/></View>
+            <View className='user-wxName'><OpenData type='userNickName' /></View>
+          </View>
+        )
+      }
     } else {
       renderInfo = (
       <View className='info-container'>
         <Image src={noPicJpg} className='user-avatar'></Image>
-        <Text className='user-name'>H5页面</Text>
+        <Text className='user-name'>{this.props.userInfo.student_name}</Text>
       </View>
       )
     }

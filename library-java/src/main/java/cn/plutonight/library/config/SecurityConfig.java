@@ -58,19 +58,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider())
-                .httpBasic()
-                .authenticationEntryPoint(((httpServletRequest, httpServletResponse, e) -> {
-                    httpServletResponse.setContentType("application/json;charset=utf-8");
-                    httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    PrintWriter out = httpServletResponse.getWriter();
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("code", 403);
-                    map.put("msg", "未登录用户");
-                    out.write(objectMapper.writeValueAsString(map));
-                    out.flush();
-                    out.close();
-                }))
-                .and()
+//                .httpBasic()
+//                .authenticationEntryPoint(((httpServletRequest, httpServletResponse, e) -> {
+//                    httpServletResponse.setContentType("application/json;charset=utf-8");
+//                    httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+//                    httpServletResponse.setHeader("Cache-Control","no-cache");
+//                    httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//                    PrintWriter out = httpServletResponse.getWriter();
+//                    Map<String, Object> map = new HashMap<>();
+//                    map.put("code", 403);
+//                    map.put("msg", "未登录用户");
+//                    out.write(objectMapper.writeValueAsString(map));
+//                    out.flush();
+//                    out.close();
+//                }))
+//                .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
@@ -78,7 +80,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .failureHandler(((httpServletRequest, httpServletResponse, e) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
-                    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+                    httpServletResponse.setHeader("Cache-Control","no-cache");
+                    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> map = new HashMap<>();
                     map.put("code", 401);
@@ -101,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     PrintWriter out = httpServletResponse.getWriter();
                     map.put("code", 200);
                     map.put("msg", "登录成功");
-                    map.put("data", authentication);
+                    map.put("data", authentication.getPrincipal());
                     out.write(objectMapper.writeValueAsString(map));
                     out.flush();
                     out.close();
@@ -110,6 +114,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedHandler(((httpServletRequest, httpServletResponse, e) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
+                    httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+                    httpServletResponse.setHeader("Cache-Control","no-cache");
                     httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> map = new HashMap<>();
@@ -123,6 +129,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessHandler(((httpServletRequest, httpServletResponse, authentication) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
+                    httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+                    httpServletResponse.setHeader("Cache-Control","no-cache");
                     Map<String, Object> map = new HashMap<>();
                     PrintWriter out = httpServletResponse.getWriter();
                     map.put("code", 200);
@@ -134,9 +142,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 }))
                 .permitAll();
         // 开启跨域访问
-        http.cors().disable();
         // 开启模拟请求
-        http.csrf().disable();
+        http.csrf().disable().cors();
     }
 
     @Override

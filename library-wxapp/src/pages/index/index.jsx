@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
-import {Button, Text, View} from '@tarojs/components'
-import {connect} from "react-redux";
+import {View} from '@tarojs/components'
+import { connect } from "react-redux";
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './index.less'
@@ -15,7 +15,7 @@ import { login_servers } from "../../servers/servers";
   userInfo
 }), (dispatch) => ({
   setName () {
-    dispatch(setName('LKnight'))
+    dispatch(setName('LKNIGHT'))
   },
   setNumber (number) {
     dispatch(setNumber(number))

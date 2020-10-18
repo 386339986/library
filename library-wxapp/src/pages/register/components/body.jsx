@@ -9,6 +9,30 @@ import "taro-ui/dist/style/components/input.scss";
 import "taro-ui/dist/style/components/list.scss";
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './body.less'
+import {login_servers} from "../../../servers/servers";
+import { HTTP_STATUS } from '../../../servers/config'
+import {connect} from "react-redux";
+import {setName, setNumber, setPhone, setToken, setUserId} from "../../../actions/info";
+
+@connect(({ userInfo }) => ({
+  userInfo
+}), (dispatch) => ({
+  setName (name) {
+    dispatch(setName(name))
+  },
+  setNumber (number) {
+    dispatch(setNumber(number))
+  },
+  setPhone (phone) {
+    dispatch(setPhone(phone))
+  },
+  setToken (token) {
+    dispatch(setToken(token))
+  },
+  setUserId (id) {
+    dispatch(setUserId(id))
+  }
+}))
 
 export default class Body extends Component {
 
@@ -57,7 +81,7 @@ export default class Body extends Component {
 
   usernameChange (value) {
     this.setState({
-      phone: value
+      username: value
     })
     return value; // 微信小程序中必须return value才能改变值
   }
@@ -80,19 +104,48 @@ export default class Body extends Component {
   componentDidHide () { }
 
   onSubmit (event) {
-    console.log(this.state);
+    console.log(this.props.userInfo);
     if (this.state.selectorChecked.trim() === '') {
       Taro.atMessage({
         'message': '请选择学校',
         'type': 'error',
       });
-    } else if (!(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/).test(this.state.password)) {
+    } else if (!(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/).test(this.state.password) && false) {
       Taro.atMessage({
         'message': '请输入包含数字和大小写字母的8~20位密码',
         'type': 'error',
       });
     } else {
-      Taro.navigateTo({url: '/pages/index/index'});
+      login_servers({username: this.state.username, password: this.state.password}).then(res => {
+        console.log(res)
+        if (res.code == HTTP_STATUS.SUCCESS) {
+          let { username, id } = res.data
+          this.props.setName(username)
+          this.props.setUserId(id)
+          this.props.setToken("login")
+          console.log(this.props.userInfo);
+          Taro.switchTab({url: '/pages/index/index',
+            success: function (res) {
+              console.log(res)
+            },
+            fail: function (res) {
+              console.log(res)
+            }
+          });
+        } else {
+          Taro.atMessage({
+            'message': '登录失败,学号或密码错误',
+            'type': 'error',
+          });
+        }
+      }).catch(err => {
+        console.log(err)
+        Taro.atMessage({
+          'message': '发生错误',
+          'type': 'error',
+        });
+      })
+      // Taro.navigateTo({url: '/pages/index/index'});
     }
   }
 

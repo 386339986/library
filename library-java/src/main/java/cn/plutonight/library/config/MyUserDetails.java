@@ -51,9 +51,9 @@ public class MyUserDetails implements UserDetails {
         this.status = status;
     }
 
-    public Integer getStatus() {
-        return this.status;
-    }
+//    public Integer getStatus() {
+//        return this.status;
+//    }
 
     public void setPassword(String password) {
         this.password = password;
