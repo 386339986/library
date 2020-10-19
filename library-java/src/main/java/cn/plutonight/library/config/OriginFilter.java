@@ -9,23 +9,19 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@Order(1)
-//@WebFilter(filterName = "httpFilter", urlPatterns = "/*", initParams = {
-//        @WebInitParam(name = "URL", value = "http://localhost:8080")
-//})
+@WebFilter(filterName = "httpFilter", urlPatterns = "/*")
 public class OriginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        System.out.println("httpFilter init...");
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE,PUT");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, api_key, Authorization");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author LPH
- * @since 2020-10-16
+ * @since 2020-10-18
  */
 @RestController
 @RequestMapping("/seat")

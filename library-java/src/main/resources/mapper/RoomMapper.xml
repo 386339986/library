@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="cn.plutonight.library.entity.Room">
         <id column="id" property="id" />
+        <result column="school_id" property="school_id" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="name" property="name" />
@@ -18,7 +19,7 @@
     <sql id="Base_Column_List">
         create_time,
         update_time,
-        id, name, status, available, count, seats
+        id, name, status, available, count, seats, school_id
     </sql>
 
 </mapper>

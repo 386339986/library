@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author LPH
- * @since 2020-10-16
+ * @since 2020-10-18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,6 +26,12 @@ public class Room implements Serializable {
     @ApiModelProperty(value = "自习室id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+
+    @ApiModelProperty(value = "学校id")
+    private String school_id;
+
+    @ApiModelProperty(value = "自习室所在校区")
+    private String campus;
 
     @ApiModelProperty(value = "自习室名称")
     private String name;

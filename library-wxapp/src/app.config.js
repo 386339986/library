@@ -1,7 +1,6 @@
 export default {
   pages: [
     'pages/index/index',
-    'pages/index1/index1',
     'pages/register/register',
     'pages/rule/rule',
     'pages/center/center',

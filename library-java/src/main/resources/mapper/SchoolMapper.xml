@@ -7,6 +7,7 @@
         <id column="id" property="id" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
+        <result column="name" property="name" />
         <result column="province" property="province" />
         <result column="city" property="city" />
         <result column="status" property="status" />
@@ -16,7 +17,7 @@
     <sql id="Base_Column_List">
         create_time,
         update_time,
-        id, province, city, status
+        id, name, province, city, status
     </sql>
 
 </mapper>

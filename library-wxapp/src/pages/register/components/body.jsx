@@ -9,10 +9,10 @@ import "taro-ui/dist/style/components/input.scss";
 import "taro-ui/dist/style/components/list.scss";
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './body.less'
-import {login_servers} from "../../../servers/servers";
+import {getListSchool_servers, login_servers} from "../../../servers/servers";
 import { HTTP_STATUS } from '../../../servers/config'
 import {connect} from "react-redux";
-import {setName, setNumber, setPhone, setToken, setUserId} from "../../../actions/info";
+import {setName, setNumber, setPhone, setToken, setUserId, setSchool} from "../../../actions/info";
 
 @connect(({ userInfo }) => ({
   userInfo
@@ -31,6 +31,9 @@ import {setName, setNumber, setPhone, setToken, setUserId} from "../../../action
   },
   setUserId (id) {
     dispatch(setUserId(id))
+  },
+  setSchool (school) {
+    dispatch(setSchool(school))
   }
 }))
 
@@ -38,15 +41,25 @@ export default class Body extends Component {
 
   constructor() {
     super(...arguments);
-    const city = ['北京市', '天津市', '广州市'];
-    const schoolList = {'北京市': ['北京大学', '清华大学', '北京邮电大学'],
-        '天津市': ['天津大学', '南开大学', '天津医科大学'],
-        '广州市': ['中山大学', '华南理工大学', '广州大学']};
+    // const city = ['北京市', '天津市', '广州市'];
+    // const schoolList = {'北京市': ['北京大学', '清华大学', '北京邮电大学'],
+    //     '天津市': ['天津大学', '南开大学', '天津医科大学'],
+    //     '广州市': ['中山大学', '华南理工大学', '广州大学']};
+    // this.state = {
+    //   city: new Array(),
+    //   selector: [city, schoolList[city[0]]],
+    //   schoolList: {'北京市': ['北京大学', '清华大学', '北京邮电大学'],
+    //     '天津市': ['天津大学', '南开大学', '天津医科大学'],
+    //     '广州市': ['中山大学', '华南理工大学', '广州大学']},
+    //   selectorChecked: '',
+    //   value: [0, 0],
+    //   username: '',
+    //   password: '',
+    //   errorText: '错误',
+    // }
     this.state = {
-      selector: [city, schoolList[city[0]]],
-      schoolList: {'北京市': ['北京大学', '清华大学', '北京邮电大学'],
-        '天津市': ['天津大学', '南开大学', '天津医科大学'],
-        '广州市': ['中山大学', '华南理工大学', '广州大学']},
+      selector: [],
+      schoolList: {},
       selectorChecked: '',
       value: [0, 0],
       username: '',
@@ -65,12 +78,6 @@ export default class Body extends Component {
         value: [value, 0],
       })
     }
-    // } else if (column === 1) {
-    //   this.setState({
-    //     selectorChecked: this.state.selector[1][value]
-    //   });
-    // }
-
   }
 
   schoolChange (event) {
@@ -95,7 +102,36 @@ export default class Body extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () {
+    getListSchool_servers().then(res => {
+      let schools = JSON.parse(res.data)
+      let cityList = []
+      let schoolList = {}
+      for (let i in schools) {
+        if (cityList.indexOf(schools[i].city) === -1) {
+          cityList.push(schools[i].city)
+        }
+        if (schoolList.hasOwnProperty(schools[i].city)) {
+          if (schoolList[schools[i].city].indexOf(schools[i].name) === -1) {
+            schoolList[schools[i].city].push(schools[i].name)
+          }
+        } else {
+          schoolList[schools[i].city] = []
+          if (schoolList[schools[i].city].indexOf(schools[i].name) === -1) {
+            schoolList[schools[i].city].push(schools[i].name)
+          }
+        }
+      }
+      let selector = [cityList, schoolList[cityList[0]]]
+      this.setState({
+        selector: selector,
+        schoolList: schoolList,
+        value: [0, 0]
+      })
+    }).catch(res => {
+      console.log(res)
+    })
+  }
 
   componentWillUnmount () { }
 
@@ -123,15 +159,9 @@ export default class Body extends Component {
           this.props.setName(username)
           this.props.setUserId(id)
           this.props.setToken("login")
+          this.props.setSchool(this.state.selectorChecked)
           console.log(this.props.userInfo);
-          Taro.switchTab({url: '/pages/index/index',
-            success: function (res) {
-              console.log(res)
-            },
-            fail: function (res) {
-              console.log(res)
-            }
-          });
+          Taro.switchTab({url: '/pages/index/index'});
         } else {
           Taro.atMessage({
             'message': '登录失败,学号或密码错误',
@@ -145,7 +175,6 @@ export default class Body extends Component {
           'type': 'error',
         });
       })
-      // Taro.navigateTo({url: '/pages/index/index'});
     }
   }
 

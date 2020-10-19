@@ -6,7 +6,6 @@ import cn.plutonight.library.service.IStudentService;
 import cn.plutonight.library.utils.Utils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,9 +14,8 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author LPH
- * @since 2020-10-16
+ * @since 2020-10-18
  */
-@Slf4j
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
 
@@ -34,13 +32,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
 
         String md5Password = Utils.StringToMD5_hex(password);
-        System.out.println("md5Password: " + md5Password);
-
         if (md5Password.equals(student.getPassword())) {
-            log.info("{} 用户登录成功", student.getName());
             return student;
         } else {
-            log.info("{} 用户登录失败", student.getName());
             return null;
         }
     }

@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author LPH
- * @since 2020-10-16
+ * @since 2020-10-18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -36,7 +36,7 @@ public class Seat implements Serializable {
     @ApiModelProperty(value = "自习室id")
     private Integer roomId;
 
-    @ApiModelProperty(value = "状态：1 空闲 2 使用 3 正常使用 ")
+    @ApiModelProperty(value = "状态：1 空闲 2 使用 3 正常使用")
     private Integer status;
 
 

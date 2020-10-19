@@ -33,12 +33,12 @@ export default class Select extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    let token = this.props.userInfo.token
-    if (token === null || token === '') {
-      Taro.redirectTo({
-        url: '/pages/register/register'
-      })
-    }
+    // let token = this.props.userInfo.token
+    // if (token === null || token === '') {
+    //   Taro.redirectTo({
+    //     url: '/pages/register/register'
+    //   })
+    // }
 
     // console.log(this.props)
     // login_servers({username: "2019229010", password: "admin"}).then(res => {

@@ -9,20 +9,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author LPH
- * @since 2020-10-16
+ * @since 2020-10-18
  */
 public interface IStudentService extends IService<Student> {
 
     /**
      * @Method login
-     * TODO: 登陆接口
-     * @param username
-     * @param password
-     * @Return Student
+     * TODO: 验证用户名和密码
+     *
      * @Date 2020/10/16
      * @Author LPH
-     * @Version  1.0
      */
     Student login(String username, String password);
-
 }

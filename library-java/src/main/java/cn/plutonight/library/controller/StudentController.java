@@ -1,17 +1,13 @@
 package cn.plutonight.library.controller;
 
 
-import cn.plutonight.library.config.MyUserDetails;
-import cn.plutonight.library.config.PassToken;
-import cn.plutonight.library.entity.Student;
-import cn.plutonight.library.service.IStudentService;
 import cn.plutonight.library.utils.ResponseGenerator;
 import cn.plutonight.library.utils.ResponseMsg;
-import cn.plutonight.library.utils.Utils;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -19,19 +15,17 @@ import org.springframework.web.bind.annotation.*;
  * </p>
  *
  * @author LPH
- * @since 2020-10-16
+ * @since 2020-10-18
  */
 @RestController
 @RequestMapping("/student")
 public class StudentController {
 
-    @Autowired
-    IStudentService studentService;
-
     @ApiOperation(value = "info", notes = "用户信息接口")
     @GetMapping("/info")
-    public ResponseMsg info() {
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseGenerator.getSuccessResponse(userDetails);
+    public ResponseMsg info () {
+
+        return ResponseGenerator.getSuccessResponse();
     }
+
 }

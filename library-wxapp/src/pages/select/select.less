@@ -37,4 +37,70 @@
     }
   }
 
+  .container-fluid {
+    padding-left: 15PX;
+    padding-right: 15PX;
+    margin-left: auto;
+    margin-right: auto;
+
+
+    .wrapper {
+      position: absolute;
+      z-index: 1;
+      top: 106PX;
+      bottom: 45PX;
+      left: 10PX;
+      right: 10PX;
+      overflow: hidden;
+
+      .content {
+        .grid-cell {
+          line-height: normal;
+          overflow: hidden;
+          position: absolute;
+          transition: all ease 0.05s;
+
+          width: 35PX;
+          height: 35PX;
+          display: block;
+          font-size: 12PX;
+          text-align: center;
+        }
+
+        .img {
+          color: #222;
+          background-repeat: no-repeat;
+          background-size: 100%;
+          line-height: 27PX;
+          width: 27PX;
+          height: 27PX;
+          display: block;
+        }
+
+        .grid-1 .img {
+          background-image: url("../../assets/img/grid_1.png");
+        }
+
+        .grid-2 .img {
+          background-image: url("../../assets/img/grid_2.png");
+        }
+
+        .grid-3 .img {
+          background-image: url("../../assets/img/grid_3.png");
+        }
+
+        .grid-4 .img {
+          background-image: url("../../assets/img/grid_4.png");
+        }
+
+        .grid-5 .img {
+          background-image: url("../../assets/img/grid_5.png");
+        }
+
+        .grid-6 .img {
+          background-image: url("../../assets/img/grid_6.png");
+        }
+      }
+    }
+  }
 }
