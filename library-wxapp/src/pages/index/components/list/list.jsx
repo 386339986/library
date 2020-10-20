@@ -11,8 +11,9 @@ import {getRoomList_servers} from "../../../../servers/servers";
 
 export default class List extends Component {
 
-  constructor() {
-    super(...arguments);
+  constructor(props) {
+    let { data } = props
+    super(props);
     // this.state = {
     //   tabList: [{title: '卫津路校区'}, {title: '北洋园校区'}],
     //   current: 0,
@@ -32,7 +33,8 @@ export default class List extends Component {
     this.state = {
       tabList: [],
       current: 0,
-      roomList: []
+      roomList: [],
+      login: (data === null || data === "") ? false : true
     }
   }
 
@@ -45,50 +47,52 @@ export default class List extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    getRoomList_servers(1).then(res => {
-      // console.log(res)
-      let rooms = JSON.parse(res.data)
-      let tabList = []
-      let roomList = []
-      for (let i in rooms) {
-        let flag = false
-        for (let j in tabList) {
-          if (tabList[j]['title'] === rooms[i].campus) {
-            flag = true
+    if (this.state.login === true) {
+      getRoomList_servers(1).then(res => {
+        // console.log(res)
+        let rooms = JSON.parse(res.data)
+        let tabList = []
+        let roomList = []
+        for (let i in rooms) {
+          let flag = false
+          for (let j in tabList) {
+            if (tabList[j]['title'] === rooms[i].campus) {
+              flag = true
+            }
           }
-        }
-        if (flag === false) {
-          tabList.push({title: rooms[i].campus})
-          let o = {}
-          o[rooms[i].campus] = []
-          roomList.push(o)
-        }
-
-        for (let j in roomList) {
-          if (roomList[j].hasOwnProperty(rooms[i].campus)) {
+          if (flag === false) {
+            tabList.push({title: rooms[i].campus})
             let o = {}
-            o['room'] = rooms[i].name
-            o['times'] = [['8:00', '22:00']]
-            o['advance'] = '2.0'
-            o['free'] = rooms[i].available
-            o['total'] = rooms[i].count
-            o['id'] = rooms[i].id
-            roomList[j][rooms[i].campus].push(o)
-            break;
+            o[rooms[i].campus] = []
+            roomList.push(o)
           }
+
+          for (let j in roomList) {
+            if (roomList[j].hasOwnProperty(rooms[i].campus)) {
+              let o = {}
+              o['room'] = rooms[i].name
+              o['times'] = [['8:00', '22:00']]
+              o['advance'] = '2.0'
+              o['free'] = rooms[i].available
+              o['total'] = rooms[i].count
+              o['id'] = rooms[i].id
+              roomList[j][rooms[i].campus].push(o)
+              break;
+            }
+          }
+
+          // roomList['' + rooms[i].campus].push()
+
+          // console.log(rooms[i])
         }
-
-        // roomList['' + rooms[i].campus].push()
-
-        // console.log(rooms[i])
-      }
-      this.setState({
-        tabList: tabList,
-        roomList: roomList
+        this.setState({
+          tabList: tabList,
+          roomList: roomList
+        })
+        // console.log(tabList)
+        // console.log(roomList)
       })
-      // console.log(tabList)
-      // console.log(roomList)
-    })
+    }
   }
 
   componentWillUnmount () { }

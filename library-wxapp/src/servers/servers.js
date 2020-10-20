@@ -24,3 +24,7 @@ export const getRoomList_servers = (data) => {
 export const getRoomInfo_servers = (data) => {
   return HttpRequest.get('/room/one?roomId=' + data)
 }
+
+export const postSelectSeat_servers = (roomId, seat) => {
+  return HttpRequest.post('/seat/select/' + roomId + '/' + seat[0] + '/' + seat[1])
+}

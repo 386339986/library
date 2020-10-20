@@ -3,6 +3,8 @@ package cn.plutonight.library.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,6 +23,33 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value="Seat对象", description="")
 public class Seat implements Serializable {
 
+    public interface STATUS {
+        /**
+         * 离开
+         */
+        Integer OUT = 1;
+
+        /**
+         * 预约
+         */
+        Integer ORDER = 2;
+
+        /**
+         * 在座
+         */
+        Integer IN = 3;
+
+        /**
+         * 暂离
+         */
+        Integer TEMP = 4;
+
+        /**
+         * 异常
+         */
+        Integer ERR = 5;
+    }
+
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "座位id")
@@ -28,16 +57,29 @@ public class Seat implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "学生id")
-    private Integer studentId;
+    private Long studentId;
 
     @ApiModelProperty(value = "学校id")
-    private Integer schoolId;
+    private Long schoolId;
 
     @ApiModelProperty(value = "自习室id")
-    private Integer roomId;
+    private Long roomId;
 
-    @ApiModelProperty(value = "状态：1 空闲 2 使用 3 正常使用")
+    @ApiModelProperty(value = "座位行")
+    private Integer row;
+
+    @ApiModelProperty(value = "座位列")
+    private Integer col;
+
+    @ApiModelProperty(value = "状态：1 空闲 2 预约 3 正常使用 4 暂离")
     private Integer status;
 
+    @ApiModelProperty(value = "座位预约时间")
+    private Timestamp create_time;
 
+    @ApiModelProperty(value = "入座时间")
+    private Timestamp use_time;
+
+    @ApiModelProperty(value = "座位释放时间")
+    private Timestamp end_time;
 }

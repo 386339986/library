@@ -8,6 +8,7 @@ import './index.less'
 import Top from "./components/top/top";
 import FuncGrid from "./components/func/func";
 import List from "./components/list/list";
+import Seat from "./components/seat/seat";
 import { setName, setNumber, setPhone, setToken } from "../../actions/info";
 import { login_servers } from "../../servers/servers";
 
@@ -30,16 +31,16 @@ import { login_servers } from "../../servers/servers";
 
 export default class Select extends Component {
 
-  componentWillMount () { }
+  componentWillMount () {
+    let token = this.props.userInfo.token
+    if (token === null || token === '') {
+      Taro.redirectTo({
+        url: '/pages/register/register'
+      })
+    }
+  }
 
   componentDidMount () {
-    // let token = this.props.userInfo.token
-    // if (token === null || token === '') {
-    //   Taro.redirectTo({
-    //     url: '/pages/register/register'
-    //   })
-    // }
-
     // console.log(this.props)
     // login_servers({username: "2019229010", password: "admin"}).then(res => {
     //   console.log(res)
@@ -59,7 +60,8 @@ export default class Select extends Component {
       <View className='select'>
         <Top />
         <FuncGrid />
-        <List />
+        <Seat />
+        <List data={this.props.userInfo.token}/>
       </View>
     )
   }

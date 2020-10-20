@@ -43,7 +43,7 @@ public class Student implements Serializable {
     private Integer status;
 
     @ApiModelProperty(value = "学校id")
-    private String schoolId;
+    private Long schoolId;
 
 
 }

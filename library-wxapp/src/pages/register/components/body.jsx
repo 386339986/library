@@ -12,7 +12,7 @@ import './body.less'
 import {getListSchool_servers, login_servers} from "../../../servers/servers";
 import { HTTP_STATUS } from '../../../servers/config'
 import {connect} from "react-redux";
-import {setName, setNumber, setPhone, setToken, setUserId, setSchool} from "../../../actions/info";
+import {setName, setNumber, setPhone, setToken, setUserId, setSchool, setSchoolId} from "../../../actions/info";
 
 @connect(({ userInfo }) => ({
   userInfo
@@ -34,6 +34,9 @@ import {setName, setNumber, setPhone, setToken, setUserId, setSchool} from "../.
   },
   setSchool (school) {
     dispatch(setSchool(school))
+  },
+  setSchoolId (id) {
+    dispatch(setSchoolId(id))
   }
 }))
 
@@ -41,30 +44,16 @@ export default class Body extends Component {
 
   constructor() {
     super(...arguments);
-    // const city = ['北京市', '天津市', '广州市'];
-    // const schoolList = {'北京市': ['北京大学', '清华大学', '北京邮电大学'],
-    //     '天津市': ['天津大学', '南开大学', '天津医科大学'],
-    //     '广州市': ['中山大学', '华南理工大学', '广州大学']};
-    // this.state = {
-    //   city: new Array(),
-    //   selector: [city, schoolList[city[0]]],
-    //   schoolList: {'北京市': ['北京大学', '清华大学', '北京邮电大学'],
-    //     '天津市': ['天津大学', '南开大学', '天津医科大学'],
-    //     '广州市': ['中山大学', '华南理工大学', '广州大学']},
-    //   selectorChecked: '',
-    //   value: [0, 0],
-    //   username: '',
-    //   password: '',
-    //   errorText: '错误',
-    // }
     this.state = {
       selector: [],
       schoolList: {},
       selectorChecked: '',
+      schoolId: {},
       value: [0, 0],
       username: '',
       password: '',
       errorText: '错误',
+      authorize: false
     }
   }
 
@@ -103,29 +92,41 @@ export default class Body extends Component {
   componentWillMount () { }
 
   componentDidMount () {
+    if (Taro.getEnv() === Taro.ENV_TYPE.WEAPP) {
+      Taro.getSetting({
+        success: function (res) {
+          if (res.authSetting['scope.userInfo']) {
+            console.log("用户已授权")
+            this.setState({
+              authorize: true
+            })
+          }
+        }.bind(this)
+      })
+    }
+
     getListSchool_servers().then(res => {
       let schools = JSON.parse(res.data)
       let cityList = []
       let schoolList = {}
+      let schoolId = {}
       for (let i in schools) {
         if (cityList.indexOf(schools[i].city) === -1) {
           cityList.push(schools[i].city)
         }
-        if (schoolList.hasOwnProperty(schools[i].city)) {
-          if (schoolList[schools[i].city].indexOf(schools[i].name) === -1) {
-            schoolList[schools[i].city].push(schools[i].name)
-          }
-        } else {
+        if (!schoolList.hasOwnProperty(schools[i].city)) {
           schoolList[schools[i].city] = []
-          if (schoolList[schools[i].city].indexOf(schools[i].name) === -1) {
-            schoolList[schools[i].city].push(schools[i].name)
-          }
+        }
+        if (schoolList[schools[i].city].indexOf(schools[i].name) === -1) {
+          schoolList[schools[i].city].push(schools[i].name)
+          schoolId[schools[i].name] = schools[i].id
         }
       }
       let selector = [cityList, schoolList[cityList[0]]]
       this.setState({
         selector: selector,
         schoolList: schoolList,
+        schoolId: schoolId,
         value: [0, 0]
       })
     }).catch(res => {
@@ -141,7 +142,7 @@ export default class Body extends Component {
 
   onSubmit (event) {
     console.log(this.props.userInfo);
-    if (this.state.selectorChecked.trim() === '') {
+    if (!this.state.selectorChecked.trim() === '') {
       Taro.atMessage({
         'message': '请选择学校',
         'type': 'error',
@@ -152,14 +153,21 @@ export default class Body extends Component {
         'type': 'error',
       });
     } else {
-      login_servers({username: this.state.username, password: this.state.password}).then(res => {
+      let schoolId = this.state.schoolId[this.state.selectorChecked]
+      let { username, password } = this.state
+      // 测试使用 直接点学号登录
+      schoolId = 1
+      username = "2019229010"
+      password = "admin"
+      login_servers({username: schoolId + ':' + username, password: password}).then(res => {
         console.log(res)
-        if (res.code == HTTP_STATUS.SUCCESS) {
+        if (res.code === HTTP_STATUS.SUCCESS) {
           let { username, id } = res.data
           this.props.setName(username)
           this.props.setUserId(id)
           this.props.setToken("login")
-          this.props.setSchool(this.state.selectorChecked)
+          this.props.setSchool('天津大学')
+          this.props.setSchoolId(schoolId)
           console.log(this.props.userInfo);
           Taro.switchTab({url: '/pages/index/index'});
         } else {
@@ -178,13 +186,17 @@ export default class Body extends Component {
     }
   }
 
+  getUserInfo(res) {
+    console.log(res)
+    console.log("userinfo")
+  }
+
   render () {
     return (
       <View className='body'>
         <AtMessage />
         <View>
           <AtForm
-            onSubmit={this.onSubmit.bind(this)}
             className='form'
           >
             <Picker
@@ -219,8 +231,11 @@ export default class Body extends Component {
               value={this.state.password}
               onChange={this.passwordChange.bind(this)}
             />
-            <AtButton formType='submit' type='primary'>绑定微信号并登录</AtButton>
+            <AtButton onClick={this.onSubmit.bind(this)} type='primary'>学号登录</AtButton>
           </AtForm>
+        </View>
+        <View className='wx-button'>
+          <AtButton type='primary'>微信号快捷登录</AtButton>
         </View>
       </View>
     )

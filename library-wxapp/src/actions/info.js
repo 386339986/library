@@ -1,4 +1,4 @@
-import { SET_NAME, SET_NUMBER, SET_PHONE, SET_TOKEN, SET_SCHOOL, SET_USER_ID } from '../constants/actions'
+import { SET_NAME, SET_NUMBER, SET_PHONE, SET_TOKEN, SET_SCHOOL, SET_USER_ID, SET_SCHOOL_ID } from '../constants/actions'
 
 export const setName = (student_name) => {
   return {
@@ -39,5 +39,12 @@ export const setUserId = (student_id) => {
   return {
     type: SET_USER_ID,
     id: student_id
+  }
+}
+
+export const setSchoolId = (school_id) => {
+  return {
+    type: SET_SCHOOL_ID,
+    school_id: school_id
   }
 }

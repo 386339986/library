@@ -29,7 +29,7 @@ export default class WxInfo extends Component {
   render() {
     let renderInfo;
     if (Taro.getEnv() === Taro.ENV_TYPE.WEAPP) {
-      if (this.props.userInfo.id !== 0) {
+      if (this.props.userInfo.student_id !== 0) {
         renderInfo = (
           <View className='info-container'>
             <View className='user-avatar'><OpenData type='userAvatarUrl' defaultAvatar={noPicJpg}/></View>

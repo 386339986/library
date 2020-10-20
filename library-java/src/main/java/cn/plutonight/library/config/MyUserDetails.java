@@ -27,6 +27,10 @@ public class MyUserDetails implements UserDetails {
     private Integer status;
     // 用户ID
     private Long id;
+    // 用户所在学校id
+    private Long schoolId;
+    // 用户权限
+    private Integer role;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -37,6 +41,22 @@ public class MyUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setSchoolId(Long id) {
+        this.schoolId = id;
+    }
+
+    public Long getSchoolId() {
+        return schoolId;
     }
 
     public void setId(Long id) {

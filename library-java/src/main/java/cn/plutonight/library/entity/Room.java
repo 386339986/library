@@ -28,7 +28,7 @@ public class Room implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "学校id")
-    private String school_id;
+    private Long schoolId;
 
     @ApiModelProperty(value = "自习室所在校区")
     private String campus;

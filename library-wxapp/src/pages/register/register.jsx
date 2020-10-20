@@ -12,27 +12,7 @@ export default class Register extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () {
-    // if (Taro.getEnv() === Taro.ENV_TYPE.WEAPP) {
-    //   Taro.getSetting({
-    //     success: function (res) {
-    //       console.log(res)
-    //       if (!res.authSetting['scope.userInfo']) {
-    //         Taro.authorize({
-    //           scope: 'scope.userInfo',
-    //           success: function () {
-    //             Taro.getUserInfo({
-    //               success: function (res) {
-    //                 console.log(res)
-    //               }
-    //             })
-    //           }
-    //         })
-    //       }
-    //     }
-    //   })
-    // }
-  }
+  componentDidMount () { }
 
   componentWillUnmount () { }
 

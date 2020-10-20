@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
 import Taro, {getCurrentInstance} from '@tarojs/taro';
 import {View, Text, Image} from '@tarojs/components';
-import { AtButton } from 'taro-ui';
+import { AtButton, AtMessage } from 'taro-ui';
 import AnyTouch from 'any-touch';
 
 import "taro-ui/dist/style/components/button.scss";
 import "taro-ui/dist/style/components/flex.scss" ;
+import "taro-ui/dist/style/components/message.scss";
 import './select.less';
 import Grid_3 from '../../assets/img/grid_1.png';
 import Grid_Free from '../../assets/img/grid_3.png';
 import Grid_Use from '../../assets/img/grid_4.png';
 import Grid_Active from '../../assets/img/grid_5.png';
-import {getRoomInfo_servers} from "../../servers/servers";
+import {getRoomInfo_servers, postSelectSeat_servers} from "../../servers/servers";
+import {connect} from "react-redux";
 // import Container from "./components/container";
 
+@connect(({ userInfo }) => ({
+  userInfo
+}))
 export default class Select extends Component {
 
   constructor() {
     super(...arguments);
     this.state = {
-      gridCellSize: 0,
+      gridCellSize: 35,
       gridSize: {},
       grid: [],
       seatNumber: {},
@@ -53,22 +58,26 @@ export default class Select extends Component {
     this.at.on('pan', (ev) => this.onPanMove(ev))
   }
 
-  componentDidMount () {
+  refreshRoomList() {
     getRoomInfo_servers(this.state.roomId).then(res => {
       let data = JSON.parse(res.data)
-      let seats = JSON.parse(data.seats)
+      let seatInfo = JSON.parse(data.seats)
+      let roomSize = JSON.parse(seatInfo['roomSize'])
+      let seatNumber = JSON.parse(seatInfo['seatNumber'])
       this.setState({
-        gridCellSize: seats.gridCellSize,
-        gridSize: seats.gridSize,
-        grid: seats.grid,
-        seatNumber: seats.seatNumber
+        gridSize: roomSize,
+        grid: seatInfo.seats,
+        seatNumber: seatNumber
       })
     })
   }
 
+  componentDidMount () {
+  }
+
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () { this.refreshRoomList() }
 
   componentDidHide () { }
 
@@ -117,6 +126,16 @@ export default class Select extends Component {
   }
 
   confirmSeat() {
+    postSelectSeat_servers(this.state.roomId, this.state.selectNumber).then(res => {
+      console.log(res)
+      // Taro.atMessage({
+      //   'message': ''
+      // })
+
+
+    }).catch(err => {
+      console.log(err)
+    })
     console.log("confirm")
   }
 
@@ -147,6 +166,7 @@ export default class Select extends Component {
   render () {
     return (
       <View className='select'>
+        <AtMessage />
         <View className='at-row at-row__justify--around footer'>
           <View className='at-col at-col-5'>
             <AtButton

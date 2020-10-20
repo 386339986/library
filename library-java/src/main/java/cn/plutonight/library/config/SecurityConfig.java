@@ -74,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                }))
 //                .and()
                 .authorizeRequests()
+                .antMatchers("/school/list").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

@@ -8,10 +8,7 @@ import cn.plutonight.library.utils.ResponseMsg;
 import cn.plutonight.library.utils.Utils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -44,7 +41,7 @@ public class UserController {
 
     @ApiOperation(value = "info", notes = "用户信息接口")
     @PassToken
-    @PostMapping("/info")
+    @GetMapping("/info")
     public ResponseMsg info(@RequestParam String username, @RequestParam String password) {
         Student student = studentService.login(username, password);
 
@@ -56,4 +53,17 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "login", notes = "管理员登录接口")
+    @PassToken
+    @PostMapping("/admin/login")
+    public ResponseMsg adminLogin(@RequestParam String username, @RequestParam String password) {
+        Student student = studentService.login(username, password);
+
+        if (student == null) {
+            return ResponseGenerator.getFailureResponse();
+        } else {
+            String token = Utils.getToken(student);
+            return ResponseGenerator.getSuccessResponse(token);
+        }
+    }
 }

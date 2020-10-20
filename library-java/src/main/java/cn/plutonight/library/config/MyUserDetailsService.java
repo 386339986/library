@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * <p>
  * 自定义用户登录时调用的类
@@ -30,7 +32,18 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        Student student = studentService.getOne(new QueryWrapper<Student>().eq("number", s).last("LIMIT 1"));
+        String[] params = s.split(":");
+        if (params.length != 2) {
+            throw new UsernameNotFoundException(s);
+        }
+        Long schoolId = Long.valueOf(params[0]);
+        String studentNumber = params[1];
+        Student student = studentService.getOne(
+                new QueryWrapper<Student>()
+                        .eq("number", studentNumber)
+                        .eq("school_id", schoolId)
+                        .last("LIMIT 1")
+        );
 
         if (student == null) {
             throw new UsernameNotFoundException(s);
@@ -41,6 +54,7 @@ public class MyUserDetailsService implements UserDetailsService {
         userDetails.setPassword(student.getPassword());
         userDetails.setStatus(student.getStatus());
         userDetails.setId(student.getId());
+        userDetails.setSchoolId(student.getSchoolId());
         return userDetails;
     }
 }
