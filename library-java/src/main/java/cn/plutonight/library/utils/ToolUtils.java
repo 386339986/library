@@ -21,6 +21,8 @@ import java.sql.Timestamp;
  */
 public class ToolUtils {
 
+    public static final Integer TEMP_TIME = 30;
+
     public static String timestampToDataString(Long timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy 年 MM 月 dd 日 HH 时 mm 分 ss 秒");
         return sdf.format(new Date(timestamp));

@@ -8,28 +8,18 @@ import './top.less'
 import userGIF from '../../../../assets/img/user.gif'
 import {connect} from "react-redux";
 
-@connect(({ userInfo }) => ({
-  userInfo
+@connect(({ localUserInfo }) => ({
+  localUserInfo
 }))
 
 export default class Top extends Component {
-
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   render () {
     return (
       <View className='top'>
         <View className='top-bar'>
-          <View className='left'>您好：{this.props.userInfo.student_name}</View>
-          <View className='right'>{this.props.userInfo.student_school}</View>
+          <View className='left'>您好：{this.props.localUserInfo.student_name}</View>
+          <View className='right'>{this.props.localUserInfo.student_school}</View>
         </View>
         <View>
           <Image src={userGIF} className='top-gif'/>

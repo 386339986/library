@@ -4,9 +4,11 @@ import cn.plutonight.library.entity.Room;
 import cn.plutonight.library.entity.Seat;
 import javax.annotation.Resource;
 
+import cn.plutonight.library.entity.Violation;
 import cn.plutonight.library.mapper.SeatMapper;
-import cn.plutonight.library.service.IRoomService;
-import cn.plutonight.library.service.ISeatService;
+import cn.plutonight.library.service.*;
+import cn.plutonight.library.utils.ResponseCode;
+import cn.plutonight.library.utils.ResponseMsg;
 import cn.plutonight.library.utils.ToolUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,11 +29,23 @@ import java.util.List;
 @Service
 public class SeatServiceImpl extends ServiceImpl<SeatMapper, Seat> implements ISeatService {
 
+    @Resource
+    private SeatMapper seatMapper;
+
     @Autowired
     IRoomService roomService;
 
-    @Resource
-    private SeatMapper seatMapper;
+    @Autowired
+    ISeatService seatService;
+
+    @Autowired
+    ISchoolService schoolService;
+
+    @Autowired
+    IStudentService studentService;
+
+    @Autowired
+    IViolationService violationService;
 
     /**
      * 根据现在的用户, 检查现在状态为在坐的的数据, 返回已经使用的时间
@@ -162,5 +176,70 @@ public class SeatServiceImpl extends ServiceImpl<SeatMapper, Seat> implements IS
 
         return seatList;
     }
+
+    /**
+     * 检查指定座位是否超时
+     * @Method checkSeatOverTime
+     * @param seatId
+     * @Return int
+     * @Exception
+     * @Author LPH
+     * @Version 1.0
+     */
+    @Override
+    public int checkSeatOverTime(Long seatId) {
+        Seat seat = this.getById(seatId);
+
+        if (seat == null) {
+            return -1;
+        }
+
+        if (seat.getStatus().equals(Seat.STATUS.IN)) {
+            // 当前已入座
+            return 1;
+        } else if (seat.getStatus().equals(Seat.STATUS.ORDER)) {
+            // 处理预约座位
+            if ((ToolUtils.getLongTimeStamp() - seat.getCreateTime().getTime()) / (1000 * 60) > seat.getRestTime()) {
+                // 如果该座位已超时，记录违规并释放
+                seat.setStatus(Seat.STATUS.OUT);
+                seatService.updateById(seat);
+                roomService.setSeatStatus(seat.getRoomId(), seat.getSeatRow(), seat.getSeatCol(), SeatServiceImpl.SEAT.AVAILABLE);
+                // 对应用户增加违规次数
+                studentService.addStudentViolationTime(seat.getStudentId());
+                Violation violation = new Violation();
+                violation.setReason("预约超时未签到");
+                violation.setSeatId(seat.getId());
+                violation.setStudentId(seat.getStudentId());
+                // 保存违规记录
+                violationService.save(violation);
+                return 2;
+            } else {
+                return 1;
+            }
+        } else if (seat.getStatus().equals(Seat.STATUS.TEMP)) {
+            // 处理暂离座位
+            if ((ToolUtils.getLongTimeStamp() - seat.getTempTime().getTime()) / (1000 * 60) > ToolUtils.TEMP_TIME) {
+                // 座位离开时间过长，记录违规并释放
+                seat.setStatus(Seat.STATUS.OUT);
+                seat.setEndTime(ToolUtils.getTimeStamp());
+                seatService.updateById(seat);
+                roomService.setSeatStatus(seat.getRoomId(), seat.getSeatRow(), seat.getSeatCol(), SeatServiceImpl.SEAT.AVAILABLE);
+                // 对应用户增加违规次数
+                studentService.addStudentViolationTime(seat.getStudentId());
+                Violation violation = new Violation();
+                violation.setReason("暂离超时未入座");
+                violation.setSeatId(seat.getId());
+                violation.setStudentId(seat.getStudentId());
+                // 保存违规记录
+                violationService.save(violation);
+                return 3;
+            } else {
+                return 1;
+            }
+        } else {
+            return -1;
+        }
+    }
+
 
 }

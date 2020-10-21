@@ -83,6 +83,12 @@ public class Seat implements Serializable {
     @ApiModelProperty(value = "入座时间")
     private Timestamp useTime;
 
+    @ApiModelProperty(value = "签到时长")
+    private Integer restTime;
+
+    @ApiModelProperty(value = "暂离开始时间")
+    private Timestamp tempTime;
+
     @ApiModelProperty(value = "座位释放时间")
     private Timestamp endTime;
 }

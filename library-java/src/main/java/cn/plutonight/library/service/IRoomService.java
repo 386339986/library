@@ -38,4 +38,16 @@ public interface IRoomService extends IService<Room> {
      * @Version 1.0
      */
     int setSeatStatus(Long roomId, int row, int col, Integer status);
+
+    /**
+     * 根据输入参数返回座位名称
+     * @Method getSeatName
+     * @param room
+     * @param row
+     * @param col
+     * @Return String
+     * @Author LPH
+     * @Version 1.0
+     */
+    String getSeatName(Room room, int row, int col);
 }

@@ -6,6 +6,7 @@ import cn.plutonight.library.entity.Seat;
 import cn.plutonight.library.mapper.RoomMapper;
 import cn.plutonight.library.service.IRoomService;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -113,7 +114,26 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
         return 1;
     }
 
+    /**
+     * 根据输入参数返回座位名称
+     * @Method getSeatName
+     * @param room
+     * @param row
+     * @param col
+     * @Return String
+     * @Author LPH
+     * @Version 1.0
+     */
+    @Override
+    public String getSeatName(Room room, int row, int col) {
+        if (room == null) {
+            return "";
+        }
 
-
+        RoomSeatDto roomSeatDto = JSON.parseObject(room.getSeats(), RoomSeatDto.class);
+        JSONObject seatNumber = JSONObject.parseObject(roomSeatDto.getSeatNumber());
+        JSONObject rowObject = (JSONObject) seatNumber.get("r" + row);
+        return rowObject.getString("c" + col);
+    }
 
 }

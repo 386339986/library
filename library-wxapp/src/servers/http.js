@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
 import getBaseUrl from './baseUrl'
 import interceptors from './interceptors'
+import {connect} from "react-redux";
 
 interceptors.forEach(interceptorItem => Taro.addInterceptor(interceptorItem))
 
@@ -16,8 +17,8 @@ class httpRequest {
       data: data,
       method: method,
       header: {
-        'content-type': contentType
-        // 'Authorization': Taro.getStorageSync('Authorization')
+        'content-type': contentType,
+        'Authorization': Taro.getStorageSync('Token')
       }
     };
     return Taro.request(option);

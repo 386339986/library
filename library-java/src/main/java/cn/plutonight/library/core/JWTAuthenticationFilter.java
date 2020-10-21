@@ -56,7 +56,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         // 没有携带Token认证信息
         if (StringUtils.isBlank(header) || !header.startsWith(JwtUtil.TOKEN_PREFIX)) {
 
-            json.put("code", ResponseCode.UNAUTHORIZED);
+            json.put("code", ResponseCode.UNAUTHORIZED.code());
             // json.put("codeCheck", false);
             json.put("msg", "Token为空");
             response.setCharacterEncoding("UTF-8");
@@ -70,7 +70,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             //json.put("status", "-2");
-            json.put("code", ResponseCode.UNAUTHORIZED);
+            json.put("code", ResponseCode.UNAUTHORIZED.code());
             // json.put("codeCheck", false);
             json.put("msg", "Token已过期");
             response.setCharacterEncoding("UTF-8");
@@ -78,7 +78,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             logger.error("Token已过期: {} " + e);
         } catch (UnsupportedJwtException e) {
             //json.put("status", "-3");
-            json.put("code", ResponseCode.UNAUTHORIZED);
+            json.put("code", ResponseCode.UNAUTHORIZED.code());
             // json.put("codeCheck", false);
             json.put("msg", "Token格式错误");
             response.setCharacterEncoding("UTF-8");
@@ -86,7 +86,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             logger.error("Token格式错误: {} " + e);
         } catch (MalformedJwtException e) {
             //json.put("status", "-4");
-            json.put("code", ResponseCode.UNAUTHORIZED);
+            json.put("code", ResponseCode.UNAUTHORIZED.code());
             // json.put("codeCheck", false);
             json.put("msg", "Token没有被正确构造");
             response.setCharacterEncoding("UTF-8");
@@ -94,7 +94,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             logger.error("Token没有被正确构造: {} " + e);
         } catch (SignatureException e) {
             //json.put("status", "-5");
-            json.put("code", ResponseCode.UNAUTHORIZED);
+            json.put("code", ResponseCode.UNAUTHORIZED.code());
             // json.put("codeCheck", false);
             json.put("msg", "Token签名失败");
             response.setCharacterEncoding("UTF-8");
@@ -102,7 +102,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             logger.error("签名失败: {} " + e);
         } catch (IllegalArgumentException e) {
             //json.put("status", "-6");
-            json.put("code", ResponseCode.UNAUTHORIZED);
+            json.put("code", ResponseCode.UNAUTHORIZED.code());
             // json.put("codeCheck", false);
             json.put("msg", "Token非法参数异常");
             response.setCharacterEncoding("UTF-8");
@@ -110,7 +110,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             logger.error("非法参数异常: {} " + e);
         }catch (Exception e){
             //json.put("status", "-9");
-            json.put("code", ResponseCode.UNAUTHORIZED);
+            json.put("code", ResponseCode.UNAUTHORIZED.code());
             // json.put("codeCheck", false);
             json.put("msg", "未知错误，请联系管理员");
             response.setCharacterEncoding("UTF-8");

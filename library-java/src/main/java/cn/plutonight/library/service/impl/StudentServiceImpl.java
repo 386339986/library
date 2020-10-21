@@ -1,11 +1,14 @@
 package cn.plutonight.library.service.impl;
 
+import cn.plutonight.library.dto.StudentDto;
 import cn.plutonight.library.entity.Student;
 import cn.plutonight.library.mapper.StudentMapper;
+import cn.plutonight.library.service.ISchoolService;
 import cn.plutonight.library.service.IStudentService;
 import cn.plutonight.library.utils.ToolUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +21,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
+
+    @Autowired
+    ISchoolService schoolService;
 
     /**
      * 学生用户登录
@@ -43,6 +49,32 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         String md5Password = ToolUtils.StringToMD5_hex(password);
         if (md5Password.equals(student.getPassword())) {
             return student;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 学生信息获取
+     * @Method getStudentInfo
+     * @param studentId
+     * @Return StudentDto
+     * @Author LPH
+     * @Version 1.0
+     */
+    @Override
+    public StudentDto getStudentInfo(Long studentId) {
+        Student student = this.getById(studentId);
+
+        if (student != null) {
+            StudentDto studentDto = new StudentDto();
+            studentDto.setId(student.getId());
+            studentDto.setIdNumber(student.getNumber());
+            studentDto.setPhone(student.getPhone());
+            studentDto.setSchoolId(student.getSchoolId());
+            studentDto.setUserName(student.getName());
+            studentDto.setSchoolName(schoolService.getSchoolNameById(student.getSchoolId()));
+            return studentDto;
         } else {
             return null;
         }

@@ -88,8 +88,6 @@ export default class Center extends Component {
         })
       }
     }
-    console.log(getCurrentInstance())
-    console.log(this.state.show)
   }
 
   componentDidMount () {

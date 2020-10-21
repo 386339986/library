@@ -7,7 +7,7 @@ const getBaseUrl = (url) => {
     } else if (url.includes('/iatadatabase/')) {
       BASE_URL = ''
     } else {
-      BASE_URL = 'http://127.0.0.1:8080'
+      BASE_URL = 'https://www.plutonight.cn:8080'
     }
   } else {
     // 生产环境
@@ -16,7 +16,7 @@ const getBaseUrl = (url) => {
     } else if (url.includes('/iatadatabase/')) {
       BASE_URL = ''
     } else {
-      BASE_URL = 'http://127.0.0.1:8080'
+      BASE_URL = 'https://www.plutonight.cn:8080'
     }
   }
   return BASE_URL

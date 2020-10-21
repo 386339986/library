@@ -9,13 +9,13 @@ import "taro-ui/dist/style/components/input.scss";
 import "taro-ui/dist/style/components/list.scss";
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './body.less'
-import {getListSchool_servers, login_servers} from "../../../servers/servers";
+import {getListSchool_servers, getUser_servers, login_servers} from "../../../servers/servers";
 import { HTTP_STATUS } from '../../../servers/config'
 import {connect} from "react-redux";
 import {setName, setNumber, setPhone, setToken, setUserId, setSchool, setSchoolId} from "../../../actions/info";
 
-@connect(({ userInfo }) => ({
-  userInfo
+@connect(({ localUserInfo }) => ({
+  localUserInfo
 }), (dispatch) => ({
   setName (name) {
     dispatch(setName(name))
@@ -140,36 +140,65 @@ export default class Body extends Component {
 
   componentDidHide () { }
 
-  onSubmit (event) {
-    console.log(this.props.userInfo);
-    if (!this.state.selectorChecked.trim() === '') {
+  getUserInfo() {
+    getUser_servers().then(res => {
+      console.log(res)
+      if (res.code === HTTP_STATUS.SUCCESS) {
+        let { id, schoolId, schoolName, userName, phone, idNumber } = res.data
+        this.props.setUserId(id)
+        this.props.setName(userName)
+        this.props.setNumber(idNumber)
+        this.props.setSchoolId(schoolId)
+        this.props.setSchool(schoolName)
+        this.props.setPhone(phone)
+        Taro.switchTab({url: '/pages/index/index'});
+      } else {
+        Taro.atMessage({
+          'message': '获取信息错误',
+          'type': 'warning',
+        });
+      }
+      //console.log(res)
+    }).catch(err => {
+      console.log(err)
       Taro.atMessage({
-        'message': '请选择学校',
+        'message': '发生错误',
         'type': 'error',
       });
-    } else if (!(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/).test(this.state.password) && false) {
+    })
+  }
+
+  onSubmit (event) {
+    // console.log(this.props.userInfo);
+    if (this.state.selectorChecked.trim() === '') {
       Taro.atMessage({
-        'message': '请输入包含数字和大小写字母的8~20位密码',
-        'type': 'error',
+        'message': '请选择学校',
+        'type': 'warning',
+      });
+    } else if (this.state.username.trim() === '') {
+      Taro.atMessage({
+        'message': '请输入学号',
+        'type': 'warning',
+      });
+    } else if (!(/^(?=.*[0-9a-zA-Z]).{5,20}$/).test(this.state.password)) {
+      // (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
+      Taro.atMessage({
+        'message': '请输入包含数字和大小写字母的5~20位密码',
+        'type': 'warning',
       });
     } else {
       let schoolId = this.state.schoolId[this.state.selectorChecked]
       let { username, password } = this.state
       // 测试使用 直接点学号登录
-      schoolId = 1
-      username = "2019229010"
-      password = "admin"
-      login_servers({username: schoolId + ':' + username, password: password}).then(res => {
-        console.log(res)
+      // schoolId = 1
+      // username = "2019229010"
+      // password = "admin"
+      login_servers({username: schoolId + ':' + username.trim(), password: password.trim()}).then(res => {
+        // console.log(res)
         if (res.code === HTTP_STATUS.SUCCESS) {
-          let { username, id } = res.data
-          this.props.setName(username)
-          this.props.setUserId(id)
-          this.props.setToken("login")
-          this.props.setSchool('天津大学')
-          this.props.setSchoolId(schoolId)
-          console.log(this.props.userInfo);
-          Taro.switchTab({url: '/pages/index/index'});
+          this.props.setToken(res.data)
+          Taro.setStorageSync('Token',res.data)
+          this.getUserInfo()
         } else {
           Taro.atMessage({
             'message': '登录失败,学号或密码错误',
@@ -186,19 +215,12 @@ export default class Body extends Component {
     }
   }
 
-  getUserInfo(res) {
-    console.log(res)
-    console.log("userinfo")
-  }
-
   render () {
     return (
       <View className='body'>
         <AtMessage />
         <View>
-          <AtForm
-            className='form'
-          >
+          <AtForm className='form'>
             <Picker
               mode='multiSelector'
               range={this.state.selector}
@@ -226,7 +248,7 @@ export default class Body extends Component {
               type='password'
               title='密码'
               required
-              placeholder='请输入密码(8~20位)'
+              placeholder='请输入密码(5~20位)'
               maxlength='20'
               value={this.state.password}
               onChange={this.passwordChange.bind(this)}
@@ -234,9 +256,9 @@ export default class Body extends Component {
             <AtButton onClick={this.onSubmit.bind(this)} type='primary'>学号登录</AtButton>
           </AtForm>
         </View>
-        <View className='wx-button'>
-          <AtButton type='primary'>微信号快捷登录</AtButton>
-        </View>
+        {/*<View className='wx-button'>*/}
+        {/*  <AtButton type='primary'>微信号快捷登录</AtButton>*/}
+        {/*</View>*/}
       </View>
     )
   }

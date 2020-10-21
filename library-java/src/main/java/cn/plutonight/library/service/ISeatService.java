@@ -57,4 +57,15 @@ public interface ISeatService extends IService<Seat> {
      * @Version 1.0
      */
     List<Seat> findOverTimeSeat(Long roomId);
+
+    /**
+     * 检查指定座位是否超时
+     * @Method checkSeatOverTime
+     * @param seatId
+     * @Return int
+     * @Exception
+     * @Author LPH
+     * @Version 1.0
+     */
+    int checkSeatOverTime(Long seatId);
 }

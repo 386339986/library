@@ -13,4 +13,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISchoolService extends IService<School> {
 
+    /**
+     * 根据ID获取学校名称
+     * @Method getSchoolNameById
+     * @param schoolId
+     * @Return String
+     * @Author LPH
+     * @Version 1.0
+     */
+    String getSchoolNameById(Long schoolId);
+
 }

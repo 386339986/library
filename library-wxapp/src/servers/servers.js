@@ -1,15 +1,15 @@
 import HttpRequest from "./http"
 
 export const login_servers = (postData) => {
-  return HttpRequest.post('/login', postData, "application/x-www-form-urlencoded")
+  return HttpRequest.post('/user/login', postData, "application/x-www-form-urlencoded")
 }
 
 export const getListSchool_servers = () => {
   return HttpRequest.get('/school/list')
 }
 
-export const getUser_servers = (data) => {
-  return HttpRequest.get('/student/info', data)
+export const getUser_servers = () => {
+  return HttpRequest.get('/student/info')
 }
 
 export const getRoomList_servers = (data) => {

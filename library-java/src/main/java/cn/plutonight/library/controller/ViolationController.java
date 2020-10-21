@@ -1,6 +1,7 @@
 package cn.plutonight.library.controller;
 
 
+import cn.plutonight.library.config.MyUserDetails;
 import cn.plutonight.library.dto.ViolationDto;
 import cn.plutonight.library.entity.Violation;
 import cn.plutonight.library.service.IViolationService;
@@ -11,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,9 +38,10 @@ public class ViolationController {
     @ApiOperation(value = "record", notes = "违规记录")
     @GetMapping("/record")
     public ResponseMsg record() {
-        // MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        List<Violation> violationList = violationService.list(new QueryWrapper<Violation>().eq("student_id", 1));
+        List<Violation> violationList = violationService.list(new QueryWrapper<Violation>()
+                .eq("student_id", userDetails.getId()));
 
         List<ViolationDto> recordDtoList = new ArrayList<>();
 

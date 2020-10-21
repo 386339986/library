@@ -17,4 +17,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> implements ISchoolService {
 
+    /**
+     * 根据ID获取学校名称
+     * @Method getSchoolNameById
+     * @param schoolId
+     * @Return String
+     * @Author LPH
+     * @Version 1.0
+     */
+    @Override
+    public String getSchoolNameById(Long schoolId) {
+        School school = this.getById(schoolId);
+        return school.getName();
+    }
+
 }

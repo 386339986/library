@@ -2,7 +2,7 @@
 	"miniprogramRoot": ".dist",
 	"projectname": "library",
 	"description": "图书馆选座预约系统-Taro",
-	"appid": "wx91915f82de55357d",
+	"appid": "wx16efadd5848a9f55",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,

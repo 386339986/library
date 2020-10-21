@@ -52,18 +52,12 @@ export default class Seat extends Component {
     })
   }
 
-  componentWillMount () { }
+  componentWillMount () {
+  }
 
   componentDidMount () {
     this.refreshMySeatInfo()
   }
-
-  componentWillUnmount () { }
-
-  componentDidShow () {
-  }
-
-  componentDidHide () { }
 
   seatDown() {
     postSeatDown_servers().then(res => {
@@ -147,7 +141,7 @@ export default class Seat extends Component {
     return text
   }
 
-  getBuuton() {
+  getButton() {
     switch (this.state.seatStatus) {
       case 2:
         return (
@@ -202,14 +196,14 @@ export default class Seat extends Component {
           <View>
             <View>
               <View className='seat-name'>
-                <Text>{this.state.campus} {this.state.roomName}室 {this.state.seatName}座</Text>
+                <Text>{this.state.campus} {this.state.roomName}室 {this.state.seatName}号</Text>
               </View>
               <View>
                 <Text></Text>
               </View>
             </View>
             <AtDivider lineColor='#ff9900' />
-            {this.getBuuton()}
+            {this.getButton()}
           </View>
         </AtCard>
       )

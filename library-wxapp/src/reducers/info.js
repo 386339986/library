@@ -10,7 +10,7 @@ const USER_INFO_STATE = {
   token: ''
 }
 
-export default function userInfo (state = USER_INFO_STATE, action) {
+export default function localUserInfo (state = USER_INFO_STATE, action) {
   switch (action.type) {
     case SET_NAME:
       return {

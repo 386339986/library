@@ -5,8 +5,8 @@ import './wxInfo.less';
 import noPicJpg from '../assets/img/no_pic.jpg';
 import {connect} from "react-redux";
 
-@connect(({userInfo}) => ({
-  userInfo
+@connect(({ localUserInfo }) => ({
+  localUserInfo
 }))
 
 export default class WxInfo extends Component {
@@ -29,11 +29,11 @@ export default class WxInfo extends Component {
   render() {
     let renderInfo;
     if (Taro.getEnv() === Taro.ENV_TYPE.WEAPP) {
-      if (this.props.userInfo.student_id !== 0) {
+      if (this.props.localUserInfo.student_id !== 0) {
         renderInfo = (
           <View className='info-container'>
             <View className='user-avatar'><OpenData type='userAvatarUrl' defaultAvatar={noPicJpg}/></View>
-            <Text className='user-name'>{this.props.userInfo.student_name}</Text>
+            <Text className='user-name'>{this.props.localUserInfo.student_name}</Text>
           </View>
         )
       } else {
@@ -48,7 +48,7 @@ export default class WxInfo extends Component {
       renderInfo = (
       <View className='info-container'>
         <Image src={noPicJpg} className='user-avatar'></Image>
-        <Text className='user-name'>{this.props.userInfo.student_name}</Text>
+        <Text className='user-name'>{this.props.localUserInfo.student_name}</Text>
       </View>
       )
     }

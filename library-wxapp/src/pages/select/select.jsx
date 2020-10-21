@@ -18,8 +18,8 @@ import { connect } from "react-redux"
 import { HTTP_STATUS } from "../../servers/config"
 // import Container from "./components/container";
 
-@connect(({ userInfo }) => ({
-  userInfo
+@connect(({ localUserInfo }) => ({
+  localUserInfo
 }))
 export default class Select extends Component {
 
@@ -44,7 +44,7 @@ export default class Select extends Component {
   componentWillMount () {
     const params = getCurrentInstance().router.params
     if (params.hasOwnProperty('id')) {
-      console.log("select has id")
+      // console.log("select has id")
       this.setState({
         roomId: params['id']
       })
@@ -149,7 +149,6 @@ export default class Select extends Component {
   }
 
   createGrid (item, row, col) {
-
     return (
       item > 0 ?
         <View
