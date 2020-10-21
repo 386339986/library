@@ -1,6 +1,6 @@
 package cn.plutonight.library.config;
 
-import cn.plutonight.library.utils.Utils;
+import cn.plutonight.library.utils.ToolUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class MyPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence charSequence) {
         // 加密方法
-        return Utils.StringToMD5_hex(charSequence.toString());
+        return ToolUtils.StringToMD5_hex(charSequence.toString());
     }
 
     @Override

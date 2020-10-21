@@ -19,7 +19,7 @@ import java.sql.Timestamp;
  * @author LPH
  * @since 2020-10-10
  */
-public class Utils {
+public class ToolUtils {
 
     public static String timestampToDataString(Long timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy 年 MM 月 dd 日 HH 时 mm 分 ss 秒");
@@ -47,11 +47,6 @@ public class Utils {
                 .compact();
         return token;
     }
-
-//    public static String getUUID() {
-//        String uuid = UUID.randomUUID().toString();
-//        return uuid.replace("-", "");
-//    }
 
     /**
      * @param str 需要加密的字符串

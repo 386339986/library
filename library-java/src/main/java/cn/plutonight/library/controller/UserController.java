@@ -2,12 +2,17 @@ package cn.plutonight.library.controller;
 
 import cn.plutonight.library.config.PassToken;
 import cn.plutonight.library.entity.Student;
+import cn.plutonight.library.entity.User;
 import cn.plutonight.library.service.IStudentService;
+import cn.plutonight.library.utils.JwtUtil;
 import cn.plutonight.library.utils.ResponseGenerator;
 import cn.plutonight.library.utils.ResponseMsg;
-import cn.plutonight.library.utils.Utils;
+import cn.plutonight.library.utils.ToolUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,13 +34,33 @@ public class UserController {
     @PassToken
     @PostMapping("/login")
     public ResponseMsg login(@RequestParam String username, @RequestParam String password) {
-        Student student = studentService.login(username, password);
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+            return ResponseGenerator.getFailureResponse();
+        }
+
+        String[] params = username.split(":");
+        if (params.length != 2) {
+            return ResponseGenerator.getFailureResponse();
+        }
+
+        Long schoolId = Long.valueOf(params[0]);
+        String studentNumber = params[1];
+        Student student = studentService.getOne(new QueryWrapper<Student>()
+                        .eq("number", studentNumber)
+                        .eq("school_id", schoolId)
+                        .last("LIMIT 1"));
 
         if (student == null) {
             return ResponseGenerator.getFailureResponse();
         } else {
-            String token = Utils.getToken(student);
-            return ResponseGenerator.getSuccessResponse(token);
+            if (ToolUtils.StringToMD5_hex(password).equals(student.getPassword())) {
+                String token = JwtUtil.generateToken(student.getName(), student.getId(), User.ROLE.STUDENT);
+                return ResponseGenerator.getSuccessResponse(token);
+            } else {
+                return ResponseGenerator.getFailureResponse();
+            }
+//            String token = ToolUtils.getToken(student);
+//            return ResponseGenerator.getSuccessResponse(token);
         }
     }
 
@@ -48,7 +73,7 @@ public class UserController {
         if (student == null) {
             return ResponseGenerator.getFailureResponse();
         } else {
-            String token = Utils.getToken(student);
+            String token = ToolUtils.getToken(student);
             return ResponseGenerator.getSuccessResponse(token);
         }
     }
@@ -62,7 +87,7 @@ public class UserController {
         if (student == null) {
             return ResponseGenerator.getFailureResponse();
         } else {
-            String token = Utils.getToken(student);
+            String token = ToolUtils.getToken(student);
             return ResponseGenerator.getSuccessResponse(token);
         }
     }

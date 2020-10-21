@@ -1,14 +1,20 @@
-package cn.plutonight.library.config;
+package cn.plutonight.library.core;
 
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * <p>
+ * 解决跨域请求问题
+ * </p>
+ *
+ * @author LPH
+ * @since 2020-10-16
+ */
 @WebFilter(filterName = "httpFilter", urlPatterns = "/*")
 public class OriginFilter implements Filter {
     @Override

@@ -1,14 +1,12 @@
 package cn.plutonight.library.controller;
 
 
-import cn.plutonight.library.dto.RecordDto;
 import cn.plutonight.library.dto.ViolationDto;
-import cn.plutonight.library.entity.Seat;
 import cn.plutonight.library.entity.Violation;
 import cn.plutonight.library.service.IViolationService;
 import cn.plutonight.library.utils.ResponseGenerator;
 import cn.plutonight.library.utils.ResponseMsg;
-import cn.plutonight.library.utils.Utils;
+import cn.plutonight.library.utils.ToolUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +45,7 @@ public class ViolationController {
         for (Violation violation: violationList) {
             ViolationDto violationDto = new ViolationDto();
             violationDto.setReason(violation.getReason());
-            violationDto.setTime(Utils.timestampToDataString(violation.getCreateTime().getTime()));
+            violationDto.setTime(ToolUtils.timestampToDataString(violation.getCreateTime().getTime()));
             recordDtoList.add(violationDto);
         }
 

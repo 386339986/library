@@ -9,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 /**
  * <p>
  * 自定义用户登录时调用的类
@@ -52,9 +50,7 @@ public class MyUserDetailsService implements UserDetailsService {
         MyUserDetails userDetails = new MyUserDetails();
         userDetails.setUsername(student.getName());
         userDetails.setPassword(student.getPassword());
-        userDetails.setStatus(student.getStatus());
         userDetails.setId(student.getId());
-        userDetails.setSchoolId(student.getSchoolId());
         return userDetails;
     }
 }

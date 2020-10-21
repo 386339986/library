@@ -3,11 +3,11 @@ package cn.plutonight.library.service.impl;
 import cn.plutonight.library.entity.Room;
 import cn.plutonight.library.entity.Seat;
 import javax.annotation.Resource;
-import cn.plutonight.library.mapper.RoomMapper;
+
 import cn.plutonight.library.mapper.SeatMapper;
 import cn.plutonight.library.service.IRoomService;
 import cn.plutonight.library.service.ISeatService;
-import cn.plutonight.library.utils.Utils;
+import cn.plutonight.library.utils.ToolUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class SeatServiceImpl extends ServiceImpl<SeatMapper, Seat> implements IS
         }
 
         int time = 0;
-        Timestamp current_time = Utils.getTimeStamp();
+        Timestamp current_time = ToolUtils.getTimeStamp();
         // 计算座位使用时间
         time = Math.toIntExact((current_time.getTime() - seat.getUseTime().getTime()) / 1000);
 

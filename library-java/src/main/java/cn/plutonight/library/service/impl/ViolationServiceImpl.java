@@ -45,6 +45,7 @@ public class ViolationServiceImpl extends ServiceImpl<ViolationMapper, Violation
      */
     @Override
     public void findAndReleaseOverTimeSeat(Long roomId) {
+        // 超时座位列表
         List<Seat> overTimeSeatList = seatService.findOverTimeSeat(roomId);
         for (Seat seat: overTimeSeatList) {
             // 释放座位

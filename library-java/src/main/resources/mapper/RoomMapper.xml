@@ -3,7 +3,7 @@
 <mapper namespace="cn.plutonight.library.mapper.RoomMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.library.code.entity.Room">
+    <resultMap id="BaseResultMap" type="cn.plutonight.library.entity.Room">
         <id column="id" property="id" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />

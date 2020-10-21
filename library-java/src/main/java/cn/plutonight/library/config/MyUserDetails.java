@@ -23,12 +23,8 @@ public class MyUserDetails implements UserDetails {
     private String username;
     // 登录密码
     private String password;
-    // 账号状态：1 启用 2 停用 3 黑名单
-    private Integer status;
     // 用户ID
     private Long id;
-    // 用户所在学校id
-    private Long schoolId;
     // 用户权限
     private Integer role;
 
@@ -51,14 +47,6 @@ public class MyUserDetails implements UserDetails {
         return role;
     }
 
-    public void setSchoolId(Long id) {
-        this.schoolId = id;
-    }
-
-    public Long getSchoolId() {
-        return schoolId;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -66,14 +54,6 @@ public class MyUserDetails implements UserDetails {
     public Long getId() {
         return id;
     }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-//    public Integer getStatus() {
-//        return this.status;
-//    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -102,7 +82,7 @@ public class MyUserDetails implements UserDetails {
     //指定用户是否被锁定或者解锁,锁定的用户无法进行身份验证
     @Override
     public boolean isAccountNonLocked() {
-        return status != 2;
+        return true;
     }
 
     //指示是否已过期的用户的凭据(密码),过期的凭据防止认证
@@ -114,6 +94,6 @@ public class MyUserDetails implements UserDetails {
     //是否被禁用,禁用的用户不能身份验证
     @Override
     public boolean isEnabled() {
-        return status != 3;
+        return true;
     }
 }

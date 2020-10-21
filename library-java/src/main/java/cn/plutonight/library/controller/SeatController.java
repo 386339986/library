@@ -2,11 +2,9 @@ package cn.plutonight.library.controller;
 
 
 import cn.plutonight.library.config.MyUserDetails;
-import cn.plutonight.library.config.UserLoginToken;
 import cn.plutonight.library.dto.RecordDto;
 import cn.plutonight.library.dto.RoomSeatDto;
 import cn.plutonight.library.entity.Room;
-import cn.plutonight.library.entity.School;
 import cn.plutonight.library.entity.Seat;
 import cn.plutonight.library.service.IRoomService;
 import cn.plutonight.library.service.ISchoolService;
@@ -15,17 +13,15 @@ import cn.plutonight.library.service.impl.SeatServiceImpl;
 import cn.plutonight.library.utils.ResponseCode;
 import cn.plutonight.library.utils.ResponseGenerator;
 import cn.plutonight.library.utils.ResponseMsg;
-import cn.plutonight.library.utils.Utils;
+import cn.plutonight.library.utils.ToolUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -166,7 +162,7 @@ public class SeatController {
             } else if (seat.getStatus().equals(Seat.STATUS.ORDER)) {
                 // 处理预约座位
                 seat.setStatus(Seat.STATUS.IN);
-                seat.setUseTime(Utils.getTimeStamp());
+                seat.setUseTime(ToolUtils.getTimeStamp());
                 seatService.updateById(seat);
                 responseMsg = new ResponseMsg(ResponseCode.SUCCESS, "成功入座");
             } else if (seat.getStatus().equals(Seat.STATUS.TEMP)) {
@@ -196,7 +192,7 @@ public class SeatController {
             responseMsg = new ResponseMsg(ResponseCode.FAIL, "当前没有预约或入座，操作失败");
         } else {
             seat.setStatus(Seat.STATUS.OUT);
-            seat.setEndTime(Utils.getTimeStamp());
+            seat.setEndTime(ToolUtils.getTimeStamp());
             seatService.updateById(seat);
             roomService.setSeatStatus(seat.getRoomId(), seat.getSeatRow(), seat.getSeatCol(), SeatServiceImpl.SEAT.AVAILABLE);
             responseMsg = new ResponseMsg(ResponseCode.SUCCESS, "操作成功");
@@ -246,7 +242,7 @@ public class SeatController {
             newRecord.setName(seat.getName());
             Integer time = Math.toIntExact((seat.getEndTime().getTime() - seat.getUseTime().getTime()) / (1000 * 60));
             newRecord.setTime(time);
-            String date = Utils.timestampToDataString(seat.getUseTime().getTime());
+            String date = ToolUtils.timestampToDataString(seat.getUseTime().getTime());
             newRecord.setDate(date);
             recordDtoList.add(newRecord);
         }

@@ -45,13 +45,13 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
 
         // 查询得到的座位行数小于输入行数
         if (seatList.size() < row) {
-            return -2;
+            return -1;
         }
         Integer[] seatsList = seatList.get(row);
 
         // 查询得到的座位列数小于输入列数
         if (seatsList.length < col) {
-            return -3;
+            return -1;
         }
 
         return seatsList[col];
@@ -94,9 +94,9 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
             return -1;
         }
 
-        // 输入的参数不是一个座位
+        // 输入的参数对应的位置实际上不是一个座位
         if (!seatColList[col].equals(SeatServiceImpl.SEAT.AVAILABLE) && !seatColList[col].equals(SeatServiceImpl.SEAT.FULL)) {
-            return -1;
+            return -2;
         }
 
         seatColList[col] = status;

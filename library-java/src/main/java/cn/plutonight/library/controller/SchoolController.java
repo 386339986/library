@@ -1,6 +1,7 @@
 package cn.plutonight.library.controller;
 
 
+import cn.plutonight.library.config.MyUserDetails;
 import cn.plutonight.library.entity.School;
 import cn.plutonight.library.service.ISchoolService;
 import cn.plutonight.library.utils.ResponseGenerator;
@@ -8,6 +9,7 @@ import cn.plutonight.library.utils.ResponseMsg;
 import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 

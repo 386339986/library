@@ -14,13 +14,33 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IStudentService extends IService<Student> {
 
     /**
+     * 学生用户登录
      * @Method login
-     * TODO: 验证用户名和密码
-     *
-     * @Date 2020/10/16
+     * @param username
+     * @param password
+     * @Return Student
      * @Author LPH
+     * @Version 1.0
      */
     Student login(String username, String password);
 
+    /**
+     * 学生违规次数增加
+     * @Method addStudentViolationTime
+     * @param studentId
+     * @Return int
+     * @Author LPH
+     * @Version 1.0
+     */
     int addStudentViolationTime(Long studentId);
+
+    /**
+     * 检查学生是否在黑名单中
+     * @Method checkStudentViolation
+     * @param studentId
+     * @Return int
+     * @Author LPH
+     * @Version 1.0
+     */
+    int checkStudentViolation(Long studentId);
 }

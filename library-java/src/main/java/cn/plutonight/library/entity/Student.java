@@ -3,6 +3,8 @@ package cn.plutonight.library.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +22,23 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="Student对象", description="学生信息")
 public class Student implements Serializable {
+
+    public interface STATUS {
+        /**
+         * 正常
+         */
+        Integer NORMAL = 1;
+
+        /**
+         * 禁用
+         */
+        Integer DISABLE = 2;
+
+        /**
+         * 黑名单
+         */
+        Integer BLACKLIST = 3;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -48,5 +67,6 @@ public class Student implements Serializable {
     @ApiModelProperty(value = "学校id")
     private Long schoolId;
 
-
+    @ApiModelProperty(value = "拉入黑名单时间")
+    private Timestamp blacklistTime;
 }

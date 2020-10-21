@@ -1,7 +1,6 @@
 package cn.plutonight.library.controller;
 
 import cn.plutonight.library.entity.Room;
-import cn.plutonight.library.entity.Seat;
 import cn.plutonight.library.service.IRoomService;
 import cn.plutonight.library.service.ISchoolService;
 import cn.plutonight.library.service.ISeatService;
@@ -45,16 +44,14 @@ public class RoomController {
     @ApiOperation(value = "info", notes = "学校自习室信息接口")
     @GetMapping("/list")
     public ResponseMsg list(@RequestParam Integer schoolId) {
-        // School school = schoolService.getById(schoolId);
         List<Room> roomList = roomService.list(new QueryWrapper<Room>().eq("school_id", schoolId));
         String roomListJSON = JSON.toJSONString(roomList);
         return ResponseGenerator.getSuccessResponse(roomListJSON);
     }
 
-    @ApiOperation(value = "info", notes = "学校自习室座位信息接口")
+    @ApiOperation(value = "info", notes = "指定自习室座位信息接口")
     @GetMapping("/one")
     public ResponseMsg one(@RequestParam Long roomId) {
-        // School school = schoolService.getById(schoolId);
         Room room = roomService.getById(roomId);
         // 查找座位时顺带查看是否有超时未签到的
         violationService.findAndReleaseOverTimeSeat(roomId);
