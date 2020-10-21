@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
-import Taro, {getCurrentInstance} from '@tarojs/taro';
-import {View, Text, Image} from '@tarojs/components';
-import { AtButton, AtMessage } from 'taro-ui';
-import AnyTouch from 'any-touch';
+import React, { Component } from 'react'
+import Taro, {getCurrentInstance} from '@tarojs/taro'
+import {View, Text, Image} from '@tarojs/components'
+import { AtButton, AtMessage, AtModal } from 'taro-ui'
+import AnyTouch from 'any-touch'
 
-import "taro-ui/dist/style/components/button.scss";
-import "taro-ui/dist/style/components/flex.scss" ;
-import "taro-ui/dist/style/components/message.scss";
-import './select.less';
-import Grid_3 from '../../assets/img/grid_1.png';
-import Grid_Free from '../../assets/img/grid_3.png';
-import Grid_Use from '../../assets/img/grid_4.png';
-import Grid_Active from '../../assets/img/grid_5.png';
-import {getRoomInfo_servers, postSelectSeat_servers} from "../../servers/servers";
-import {connect} from "react-redux";
+import "taro-ui/dist/style/components/button.scss"
+import "taro-ui/dist/style/components/flex.scss"
+import "taro-ui/dist/style/components/message.scss"
+import "taro-ui/dist/style/components/modal.scss"
+import './select.less'
+import Grid_3 from '../../assets/img/grid_1.png'
+import Grid_Free from '../../assets/img/grid_3.png'
+import Grid_Use from '../../assets/img/grid_4.png'
+import Grid_Active from '../../assets/img/grid_5.png'
+import { getRoomInfo_servers, postSelectSeat_servers } from "../../servers/servers"
+import { connect } from "react-redux"
+import { HTTP_STATUS } from "../../servers/config"
 // import Container from "./components/container";
 
 @connect(({ userInfo }) => ({
@@ -33,7 +35,8 @@ export default class Select extends Component {
       top: '0PX',
       left: '0PX',
       selected: false,
-      selectNumber: []
+      selectNumber: [],
+      modelOpen: false
     }
     this.at = new AnyTouch ()
   }
@@ -128,11 +131,17 @@ export default class Select extends Component {
   confirmSeat() {
     postSelectSeat_servers(this.state.roomId, this.state.selectNumber).then(res => {
       console.log(res)
-      // Taro.atMessage({
-      //   'message': ''
-      // })
-
-
+      //let resJson = JSON.parse(res)
+      if (res.code === HTTP_STATUS.CLIENT_ERROR) {
+        Taro.atMessage({
+          'message': res.msg,
+          'type': "error"
+        })
+      } else if (res.code === HTTP_STATUS.SUCCESS) {
+        this.setState({
+          modelOpen: true
+        })
+      }
     }).catch(err => {
       console.log(err)
     })
@@ -163,9 +172,22 @@ export default class Select extends Component {
     )
   }
 
+  backHome() {
+    Taro.switchTab({
+      url: '/pages/index/index'
+    })
+  }
+
   render () {
     return (
       <View className='select'>
+        <AtModal
+          isOpened={this.state.modelOpen}
+          title='预约成功'
+          confirmText='确认'
+          onConfirm={this.backHome}
+          content='座位预约成功，请在15分钟内签到'
+        />
         <AtMessage />
         <View className='at-row at-row__justify--around footer'>
           <View className='at-col at-col-5'>
@@ -202,7 +224,7 @@ export default class Select extends Component {
             <View className='icon_container at-col at-col-3'>
               <Image src={Grid_Active} className='icon'></Image>
               <View className='font'>
-                <Text>我的座位</Text>
+                <Text>我的选座</Text>
               </View>
             </View>
             <View className='icon_container at-col at-col-3'>

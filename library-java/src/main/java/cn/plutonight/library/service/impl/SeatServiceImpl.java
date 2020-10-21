@@ -2,6 +2,7 @@ package cn.plutonight.library.service.impl;
 
 import cn.plutonight.library.entity.Room;
 import cn.plutonight.library.entity.Seat;
+import javax.annotation.Resource;
 import cn.plutonight.library.mapper.RoomMapper;
 import cn.plutonight.library.mapper.SeatMapper;
 import cn.plutonight.library.service.IRoomService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * <p>
@@ -27,6 +29,9 @@ public class SeatServiceImpl extends ServiceImpl<SeatMapper, Seat> implements IS
 
     @Autowired
     IRoomService roomService;
+
+    @Resource
+    private SeatMapper seatMapper;
 
     /**
      * 根据现在的用户, 检查现在状态为在坐的的数据, 返回已经使用的时间
@@ -51,14 +56,14 @@ public class SeatServiceImpl extends ServiceImpl<SeatMapper, Seat> implements IS
         int time = 0;
         Timestamp current_time = Utils.getTimeStamp();
         // 计算座位使用时间
-        time = Math.toIntExact((current_time.getTime() - seat.getUse_time().getTime()) / 1000);
+        time = Math.toIntExact((current_time.getTime() - seat.getUseTime().getTime()) / 1000);
 
         return time;
     }
 
     public interface SEAT {
-        int AVAILABLE = 3;
-        int FULL = 4;
+        Integer AVAILABLE = 3;
+        Integer FULL = 4;
     }
 
     /**
@@ -115,4 +120,47 @@ public class SeatServiceImpl extends ServiceImpl<SeatMapper, Seat> implements IS
             return -1;
         }
     }
+
+    /**
+     * 查看指定学生ID当前是否有座
+     * @Method studentSeat
+     * @param studentId
+     * @Return int (Seat.STATUS)
+     * @Exception
+     * @Author LPH
+     * @Version 1.0
+     */
+    @Override
+    public Seat studentSeat(Long studentId) {
+        Seat checkSeat = this.getOne(new QueryWrapper<Seat>()
+                .eq("student_id", 1)
+                .and(x ->
+                        x.eq("status", Seat.STATUS.ORDER)
+                                .or().eq("status", Seat.STATUS.IN)
+                                .or().eq("status", Seat.STATUS.TEMP))
+                .last("LIMIT 1")
+        );
+
+        return checkSeat;
+    }
+
+    /**
+     * 查找所有预约座位中超时的
+     * @Method findOverTimeSeat
+     * @param roomId
+     * @Return List
+     * @Exception
+     * @Author LPH
+     * @Version 1.0
+     */
+    @Override
+    public List<Seat> findOverTimeSeat(Long roomId) {
+
+        List<Seat> seatList = seatMapper.selectList(new QueryWrapper<Seat>()
+                .apply("room_id = "+ roomId +" AND status = 2 AND ((CURRENT_TIMESTAMP - `create_time`) / (60) > `rest_time`)")
+        );
+
+        return seatList;
+    }
+
 }

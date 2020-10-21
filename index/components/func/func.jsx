@@ -23,9 +23,20 @@ export default class FuncGrid extends Component {
   handleClick (item, index) {
     switch (index) {
       case 0:
-        Taro.reLaunch({ url: '/pages/center/center?page=record' })
         break;
       case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
         Taro.reLaunch({ url: '/pages/center/center?page=mistake' })
         break;
     }
@@ -38,8 +49,32 @@ export default class FuncGrid extends Component {
           data={
           [
             {
+              iconInfo: {size: 30, color: 'red', value: 'clock'},
+              value: '明日预约'
+            },
+            {
+              iconInfo: {size: 30, color: 'orange', value: 'alert-circle'},
+              value: '监督占座'
+            },
+            {
               iconInfo: {size: 30, color: 'blue', value: 'bookmark'},
               value: '使用记录'
+            },
+            {
+              iconInfo: {size: 30, color: 'green', value: 'shopping-bag'},
+              value: '积分商城'
+            },
+            {
+              iconInfo: {size: 30, color: "orchid", value: 'folder'},
+              value: '道具包'
+            },
+            {
+              iconInfo: {size: 30, color: "pink", value: 'tag'},
+              value: '积分任务'
+            },
+            {
+              iconInfo: {size: 30, color: "sienna", value: 'numbered-list'},
+              value: '排行榜'
             },
             {
               iconInfo: {size: 30, color: "tan", value: 'blocked'},
@@ -47,7 +82,7 @@ export default class FuncGrid extends Component {
             }
           ]
         }
-          columnNum={2}
+          columnNum={4}
           onClick={(item, index)=> (this.handleClick(item, index))}
         />
         <AtNoticebar

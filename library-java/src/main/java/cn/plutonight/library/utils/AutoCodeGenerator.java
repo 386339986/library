@@ -62,7 +62,7 @@ public class AutoCodeGenerator {
         // 包配置
         final PackageConfig pc = new PackageConfig();
         // pc.setModuleName(scanner("模块名"));
-        pc.setParent("cn.plutonight.library");
+        pc.setParent("cn.plutonight.code");
         generator.setPackageInfo(pc);
 
         // 自定义配置

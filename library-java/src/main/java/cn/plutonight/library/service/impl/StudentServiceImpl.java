@@ -38,4 +38,22 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             return null;
         }
     }
+
+    @Override
+    public int addStudentViolationTime(Long studentId) {
+        Student student = this.getById(studentId);
+
+        if (student == null) {
+            return -1;
+        }
+
+        student.setViolationTime(student.getViolationTime());
+        // 违规超过3次拉入黑名单
+        if (student.getViolationTime() >= 3) {
+            student.setStatus(3);
+        }
+
+        this.updateById(student);
+        return 1;
+    }
 }

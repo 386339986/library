@@ -32,16 +32,15 @@ import { login_servers } from "../../servers/servers";
 export default class Select extends Component {
 
   componentWillMount () {
-
+    let token = this.props.userInfo.token
+    if (token === null || token === '') {
+      Taro.redirectTo({
+        url: '/pages/register/register'
+      })
+    }
   }
 
   componentDidMount () {
-    // let token = this.props.userInfo.token
-    // if (token === null || token === '') {
-    //   Taro.redirectTo({
-    //     url: '/pages/register/register'
-    //   })
-    // }
     // console.log(this.props)
     // login_servers({username: "2019229010", password: "admin"}).then(res => {
     //   console.log(res)

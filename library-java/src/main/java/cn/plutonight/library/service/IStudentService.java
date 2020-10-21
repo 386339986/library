@@ -21,4 +21,6 @@ public interface IStudentService extends IService<Student> {
      * @Author LPH
      */
     Student login(String username, String password);
+
+    int addStudentViolationTime(Long studentId);
 }

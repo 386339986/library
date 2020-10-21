@@ -42,6 +42,9 @@ public class Student implements Serializable {
     @ApiModelProperty(value = "状态：1 正常 2 停用 3 黑名单")
     private Integer status;
 
+    @ApiModelProperty(value = "违规次数")
+    private Integer violationTime;
+
     @ApiModelProperty(value = "学校id")
     private Long schoolId;
 

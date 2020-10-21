@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -19,6 +20,11 @@ import java.sql.Timestamp;
  * @since 2020-10-10
  */
 public class Utils {
+
+    public static String timestampToDataString(Long timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy 年 MM 月 dd 日 HH 时 mm 分 ss 秒");
+        return sdf.format(new Date(timestamp));
+    }
 
     public static Timestamp getTimeStamp() {
         return new Timestamp(new Date().getTime());

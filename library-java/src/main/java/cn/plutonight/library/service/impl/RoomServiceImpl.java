@@ -69,8 +69,8 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
      * @Version 1.0
      */
     @Override
-    public int setSeatStatus(Long roomId, int row, int col, int status) {
-        if (status != SeatServiceImpl.SEAT.AVAILABLE || status != SeatServiceImpl.SEAT.FULL) {
+    public int setSeatStatus(Long roomId, int row, int col, Integer status) {
+        if (!status.equals(SeatServiceImpl.SEAT.AVAILABLE) && !status.equals(SeatServiceImpl.SEAT.FULL)) {
             return -1;
         }
 
@@ -95,7 +95,7 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
         }
 
         // 输入的参数不是一个座位
-        if (seatColList[col] != SeatServiceImpl.SEAT.AVAILABLE || seatColList[col] != SeatServiceImpl.SEAT.FULL) {
+        if (!seatColList[col].equals(SeatServiceImpl.SEAT.AVAILABLE) && !seatColList[col].equals(SeatServiceImpl.SEAT.FULL)) {
             return -1;
         }
 
@@ -112,4 +112,8 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
         System.out.println("座位状态已更新");
         return 1;
     }
+
+
+
+
 }

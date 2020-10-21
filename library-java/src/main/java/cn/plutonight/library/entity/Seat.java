@@ -65,21 +65,24 @@ public class Seat implements Serializable {
     @ApiModelProperty(value = "自习室id")
     private Long roomId;
 
+    @ApiModelProperty(value = "座位名称")
+    private String name;
+
     @ApiModelProperty(value = "座位行")
-    private Integer row;
+    private Integer seatRow;
 
     @ApiModelProperty(value = "座位列")
-    private Integer col;
+    private Integer seatCol;
 
     @ApiModelProperty(value = "状态：1 空闲 2 预约 3 正常使用 4 暂离")
     private Integer status;
 
     @ApiModelProperty(value = "座位预约时间")
-    private Timestamp create_time;
+    private Timestamp createTime;
 
     @ApiModelProperty(value = "入座时间")
-    private Timestamp use_time;
+    private Timestamp useTime;
 
     @ApiModelProperty(value = "座位释放时间")
-    private Timestamp end_time;
+    private Timestamp endTime;
 }

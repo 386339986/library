@@ -3,11 +3,12 @@
 <mapper namespace="cn.plutonight.library.mapper.RoomMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.plutonight.library.entity.Room">
+    <resultMap id="BaseResultMap" type="cn.library.code.entity.Room">
         <id column="id" property="id" />
-        <result column="school_id" property="school_id" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
+        <result column="school_id" property="schoolId" />
+        <result column="campus" property="campus" />
         <result column="name" property="name" />
         <result column="status" property="status" />
         <result column="available" property="available" />
@@ -19,7 +20,7 @@
     <sql id="Base_Column_List">
         create_time,
         update_time,
-        id, name, status, available, count, seats, school_id
+        id, school_id, campus, name, status, available, count, seats
     </sql>
 
 </mapper>

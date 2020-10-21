@@ -3,6 +3,8 @@ package cn.plutonight.library.service;
 import cn.plutonight.library.entity.Seat;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -33,4 +35,26 @@ public interface ISeatService extends IService<Seat> {
      * @Version 1.0
      */
     int checkSeat(Long roomId, int row, int col);
+
+    /**
+     * 查看指定学生ID当前是否有座
+     * @Method studentSeat
+     * @param studentId
+     * @Return Seat
+     * @Exception
+     * @Author LPH
+     * @Version 1.0
+     */
+    Seat studentSeat(Long studentId);
+
+    /**
+     * 查找所有预约座位中超时的
+     * @Method findOverTimeSeat
+     * @param roomId
+     * @Return List
+     * @Exception
+     * @Author LPH
+     * @Version 1.0
+     */
+    List<Seat> findOverTimeSeat(Long roomId);
 }

@@ -37,5 +37,5 @@ public interface IRoomService extends IService<Room> {
      * @Author LPH
      * @Version 1.0
      */
-    int setSeatStatus(Long roomId, int row, int col, int status);
+    int setSeatStatus(Long roomId, int row, int col, Integer status);
 }

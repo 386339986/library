@@ -96,7 +96,7 @@ export default class Body extends Component {
       Taro.getSetting({
         success: function (res) {
           if (res.authSetting['scope.userInfo']) {
-            console.log("用户已授权")
+            // console.log("用户已授权")
             this.setState({
               authorize: true
             })

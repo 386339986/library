@@ -1,10 +1,11 @@
 package cn.plutonight.library.controller;
 
-
 import cn.plutonight.library.entity.Room;
-import cn.plutonight.library.entity.School;
+import cn.plutonight.library.entity.Seat;
 import cn.plutonight.library.service.IRoomService;
 import cn.plutonight.library.service.ISchoolService;
+import cn.plutonight.library.service.ISeatService;
+import cn.plutonight.library.service.IViolationService;
 import cn.plutonight.library.utils.ResponseGenerator;
 import cn.plutonight.library.utils.ResponseMsg;
 import com.alibaba.fastjson.JSON;
@@ -35,6 +36,11 @@ public class RoomController {
     ISchoolService schoolService;
     @Autowired
     IRoomService roomService;
+    @Autowired
+    ISeatService seatService;
+    @Autowired
+    IViolationService violationService;
+
 
     @ApiOperation(value = "info", notes = "学校自习室信息接口")
     @GetMapping("/list")
@@ -47,9 +53,12 @@ public class RoomController {
 
     @ApiOperation(value = "info", notes = "学校自习室座位信息接口")
     @GetMapping("/one")
-    public ResponseMsg one(@RequestParam Integer roomId) {
+    public ResponseMsg one(@RequestParam Long roomId) {
         // School school = schoolService.getById(schoolId);
         Room room = roomService.getById(roomId);
+        // 查找座位时顺带查看是否有超时未签到的
+        violationService.findAndReleaseOverTimeSeat(roomId);
+
         String roomJSON = JSON.toJSONString(room);
         return ResponseGenerator.getSuccessResponse(roomJSON);
     }

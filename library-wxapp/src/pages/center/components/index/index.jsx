@@ -29,13 +29,13 @@ export default class Index extends Component {
     return (
       <View className='index-body'>
         <AtList>
-          <AtListItem
-            title='我的积分'
-            arrow='right'
-            extraText='0分'
-            iconInfo={{ size: 24, color: '#ffa323', value: 'star', }}
-            onClick={() => (this.props.onWinChange('point', true))}
-          />
+          {/*<AtListItem*/}
+          {/*  title='我的积分'*/}
+          {/*  arrow='right'*/}
+          {/*  extraText='0分'*/}
+          {/*  iconInfo={{ size: 24, color: '#ffa323', value: 'star', }}*/}
+          {/*  onClick={() => (this.props.onWinChange('point', true))}*/}
+          {/*/>*/}
           <AtListItem
             title='消息中心'
             arrow='right'

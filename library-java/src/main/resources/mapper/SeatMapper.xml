@@ -10,14 +10,21 @@
         <result column="student_id" property="studentId" />
         <result column="school_id" property="schoolId" />
         <result column="room_id" property="roomId" />
+        <result column="seat_row" property="seatRow" />
+        <result column="name" property="name" />
+        <result column="seat_col" property="seatCol" />
         <result column="status" property="status" />
+        <result column="rest_time" property="restTime" />
+        <result column="use_time" property="useTime" />
+        <result column="end_time" property="endTime" />
+        <result column="temp_time" property="tempTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         create_time,
         update_time,
-        id, student_id, school_id, room_id, status
+        id, student_id, school_id, room_id, seat_row, name, seat_col, status, rest_time, use_time, end_time, temp_time
     </sql>
 
 </mapper>
