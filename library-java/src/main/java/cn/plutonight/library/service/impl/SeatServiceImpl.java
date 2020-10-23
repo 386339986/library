@@ -147,7 +147,7 @@ public class SeatServiceImpl extends ServiceImpl<SeatMapper, Seat> implements IS
     @Override
     public Seat studentSeat(Long studentId) {
         Seat checkSeat = this.getOne(new QueryWrapper<Seat>()
-                .eq("student_id", 1)
+                .eq("student_id", studentId)
                 .and(x ->
                         x.eq("status", Seat.STATUS.ORDER)
                                 .or().eq("status", Seat.STATUS.IN)

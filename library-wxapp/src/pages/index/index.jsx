@@ -114,7 +114,7 @@ export default class Select extends Component {
   getRoomList(school_id) {
     // console.log('getRoomList')
     getRoomList_servers(school_id).then(res => {
-      // console.log(res)
+      console.log(res)
       let rooms = JSON.parse(res.data)
       let tabList = []
       let roomList = []

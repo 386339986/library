@@ -106,6 +106,7 @@ export default class Body extends Component {
     }
 
     getListSchool_servers().then(res => {
+      console.log(res)
       let schools = JSON.parse(res.data)
       let cityList = []
       let schoolList = {}
@@ -130,6 +131,7 @@ export default class Body extends Component {
         value: [0, 0]
       })
     }).catch(res => {
+      console.log('getListSchool_servers error')
       console.log(res)
     })
   }

@@ -3,11 +3,11 @@ import Taro from '@tarojs/taro'
 import {Text, View} from '@tarojs/components'
 import {AtButton, AtCard, AtDivider, AtMessage} from 'taro-ui'
 
-import './seat.less'
 import "taro-ui/dist/style/components/card.scss"
 import "taro-ui/dist/style/components/divider.scss"
 import "taro-ui/dist/style/components/flex.scss"
 import "taro-ui/dist/style/components/message.scss"
+import './seat.less'
 import {HTTP_STATUS} from "../../../../servers/config";
 import {
   getMySeat_servers,
